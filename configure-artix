@@ -1,0 +1,126 @@
+#! /bin/bash
+
+echo crml_world > /etc/hostname 
+
+ln -sf /usr/share/zoneinfo/Europe/Kyiv /etc/localtime
+
+sed -i 's/#en_US\.UTF-8/en_US\.UTF-8/g' /etc/locale.gen
+sed -i 's/#uk_UA\.UTF-8/uk_UA\.UTF-8/g' /etc/locale.gen
+locale-gen
+
+
+echo 127.0.0.1	localhost >> /etc/hosts
+echo ::1		localhost >> /etc/hosts
+echo 127.0.1.1	myhostname.localdomain	myhostname >> /etc/hosts
+
+export EDITOR=nvim
+visudo
+
+echo '
+Server = https://universe.artixlinux.org/$arch
+Server = https://mirror1.artixlinux.org/universe/$arch
+Server = https://mirror.pascalpuffke.de/artix-universe/$arch
+Server = https://artixlinux.qontinuum.space/artixlinux/universe/os/$arch
+Server = https://mirror1.cl.netactuate.com/artix/universe/$arch
+Server = https://ftp.crifo.org/artix-universe/
+' >> /etc/pacman.d/mirrorlist
+
+echo '
+[universe] Include = /etc/pacman.d/mirrorlist ' >> /etc/pacman.conf
+
+pacman -Sy 
+pacman -Syu artix-archlinux-support
+
+echo '
+[testing]
+Include = /etc/pacman.d/mirrorlist-arch
+
+[extra]
+Include = /etc/pacman.d/mirrorlist-arch
+
+[community-testing]
+Include = /etc/pacman.d/mirrorlist-arch
+
+[community]
+Include = /etc/pacman.d/mirrorlist-arch
+
+[multilib-testing]
+Include = /etc/pacman.d/mirrorlist-arch
+
+[multilib]
+Include = /etc/pacman.d/mirrorlist-arch
+' >> /etc/pacman.conf
+
+pacman-key --populate archlinux
+
+
+# Install BlackArch
+
+cd /tmp
+curl -O https://blackarch.org/strap.sh
+chmod +x strap.sh
+sudo ./strap.sh
+sudo pacman -Syu
+
+# Install Chaotic
+
+echo '
+[chaotic-aur]
+Server = https://geo-mirror.chaotic.cx/$repo/$arch
+' >> /etc/pacman.conf 
+
+useradd -m -G wheel,seat,video,audio,tty,input,lp,storage,users,network,power -s /bin/zsh nicourrrn
+passwd nicourrrn
+
+
+pacman -S go
+su -c "git clone https://aur.archlinux.org/yay.git" nicourrrn
+cd yay
+
+su nicourrrn
+
+second-packages=(dhclient openssh connman-dinit oh-my-zsh-git pipewire-pulse ttf-hack polkit-kde-agent)
+
+yay -S ${$second-packages[@]}
+
+
+refind-install
+
+#cd /boot
+#for name in $(ls /usr/lib/modules) 
+#do
+#    booster build booster-linux$name --compression=zstd --kernel-version=$name
+#    '"Boot with $name" "ro root=UUID=$(lsblk -o UUID $1 | sed -n 2p) rootflags=subvol=@ add_efi_memmap initrd=amd-ucode.img initrd=booster-linux$name.img"' >> /boot/refind_linux.conf
+#done
+#
+
+
+
+dinitctl enable seatd
+dinitctl enable connman
+
+gui-packages=(hyprland-nvidia nvidia dropbox eww-wayland dunst fuzzel alacritty xdg-desktop-portal-hyprland lemurs-git) 
+yay -S ${gui-packages[@]} 
+
+# cp dinit.d/* /etc/dinit.d/
+
+console-packages=(lsd thefuck just zplug dust ttf-hack-nerd btop htop tree fzf ranger ripdrag tmux-plugin-manager tmuxp sad bat)
+yay -S ${console-packages[@]}   
+
+ui-packages=(firefox thunar qt5ct keepassxc telegram-desktop discord spotify steam)
+yay -S ${ui-packages[@]}
+
+
+#
+#mkdir $HOME/.config/zsh
+#echo "export ZDOTDIR=$HOME/.config/zsh" > $HOME/.zshenv
+#cp /usr/share/oh-my-zsh/zshrc $HOME/.config/zsh/.zshrc
+#
+#sourse $HOME/.config/zsh/.zshrc
+#
+#
+#yay -S nvim-packer-git sad
+#
+
+lang-packages=(ruff pyright)
+yay -S ${lang-packages[@]}

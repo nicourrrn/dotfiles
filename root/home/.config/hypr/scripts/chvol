@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+pw-volume change $1
+echo $(pw-volume status) >> /tmp/pw-volume-status

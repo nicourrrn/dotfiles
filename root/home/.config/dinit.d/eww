@@ -1,0 +1,3 @@
+type    = process
+command = /home/nicourrrn/.config/dinit.d/scripts/eww
+logfile = /home/nicourrrn/.local/log/eww.log

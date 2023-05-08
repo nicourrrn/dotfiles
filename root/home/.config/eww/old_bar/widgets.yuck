@@ -1,0 +1,185 @@
+(include "./bar/variables.yuck")
+
+; --------------------- Left part -----------------------
+(defwidget left_side []
+  (box :orietation "h"
+       (cmd)
+       (workspaces)
+  )
+)
+
+(defwidget cmd [] 
+  (box  
+    :vexpand "false" :hexpand "false"
+    :orietation "h"
+    :halign "start"
+    :spasing 1 
+    (button 
+      (label :text "🔥")
+      )
+  )
+)
+
+
+(deflisten spaces :initial '{ "actual": 1, "works": [1] }'  "zsh ~/.config/eww/bar/scripts/workspace")
+(defwidget workspaces []
+  (box :orietation "h"
+        :halign "start"
+        :spacing 10
+     (for s in "${spaces.works}"
+      (button :onclick "hyprctl dispatch workspace ${s}"
+        (label :text {s == "${spaces.actual}" ? "●" : "○"}
+               :class "workspace"
+        )
+      )
+    )
+  )
+)
+
+
+
+; ------------------------------------------------------
+
+
+; --------------------- Center part --------------------
+(defwidget center_side []
+  (box :orietation "h"
+       "Center"
+  )
+)
+
+
+; ------------------------------------------------------
+
+
+; --------------------- Right part ---------------------
+
+(defwidget right_side[]
+  (box :orietation "h"
+    :halign "end"
+    (bright)
+    (volume)
+    
+    (sep)
+
+    (batery) 
+    (mem)
+    
+    (sep)
+    
+    (datetime)
+    )
+)
+
+(defwidget sep [] 
+  (box :vexpand "false" :hexpand "false"
+       (label :text "|")
+  )
+)
+
+(defwidget batery [] 
+  (box :vexpand "false" :hexpand "false"
+    (circular-progress 
+      :class "bat_bar"
+      :value "${EWW_BATTERY.BAT1.capacity}" 
+      :thickness 4
+      (button 
+        :limit-width 2
+        :tooltip "batery is ${EWW_BATTERY.BAT1.capacity}%"
+        :show_truncated false
+        :wrap false
+        ""
+        )
+      )
+  )
+)
+
+(defwidget mem [] 
+  (box :vexpand "false" :hexpand "false"
+    (circular-progress 
+      :class "bat_bar"
+      :value "${EWW_RAM.used_mem  / EWW_RAM.total_mem * 100}" 
+      :thickness 4
+      (button 
+        :limit-width 2
+        :tooltip "using ${EWW_RAM.used_mem / EWW_RAM.total_mem * 100}%"
+        :show_truncated false
+        :wrap false
+        ""
+        )
+      )
+  )
+)
+
+
+
+
+(defvar show_volume false)
+(defwidget volume []
+    (eventbox :onhover "eww update show_volume=true" 
+              :onhoverlost "eww update show_volume=false"
+
+    (box :class "scale_bar" :orietation "h" :spacing "3" :space-evenly "false" 
+      
+      (button "🔊")
+        (revealer :transition "slideleft" :reveal show_volume :duration "350ms"
+          (scale :class "volume_bar" 
+                 :min: 0 :max: 100
+                 :value 20
+                 :tooltip "volume" 
+                 :orietation "h"
+          )
+      )
+    )
+  )
+)
+
+(defvar show_bright false)
+(defwidget bright []
+  (eventbox :onhover "eww update show_bright=true" 
+            :onhoverlost "eww update show_bright=false"
+
+    (box :class "scale_bar" :orietation "h" :spacing "3" :space-evenly "false"
+         (button "💡")
+         (revealer :transition "slideleft" :reveal show_bright :duration "350ms"
+            (scale :class "bright_bar" 
+              :min 0 :max 100
+              :value 20
+              :tooltip "bright" 
+              :orietation "h"
+              )
+      )
+    )
+  )
+)
+
+
+
+
+(defpoll time :interval "5s" :initial "00 : 00"  `date '+\%H : \%M'`)
+(defpoll date :interval "1m" :initial "00 / 00" `date '+%m / %d'`)
+(defvar show_date false)
+
+(defwidget datetime []
+  (eventbox :onhover "eww update show_date=true" :onhoverlost "eww update show_date=false"
+    (box :orietation "h" :spacing "3"  :space-evenly "false"
+         (label :text time)
+         (revealer :transition "slideleft" :reveal show_date :duration "350ms"
+                   (label :text date)
+      )
+    )
+  )
+)
+
+
+; ------------------------------------------------------
+
+
+; ----------------- Aditiolan Windows -----------------
+
+(defwidget cal []
+	(box :class "cal" :orientation "v"
+	(box :class "cal-in"
+	(calendar :class "cal"))))
+; -----------------------------------------------------
+

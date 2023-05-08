@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# pacman -Sy 
+# sed 's/ParallelDownloads = 1/ParallelDownloads = 5' -i /etc/pacman.conf
+
+subvols=('home' 'tmp' 'var' 'snapshot' 'swap')
+
+boot_part='/dev/nvme0n1p1'
+root_part='/dev/nvme0n1p2'
+
+# mkfs.vfat -L boot $boot_part
+# mkfs.btrfs -L root $root_part
+
+#mount $root_part /mnt
+#
+#btrfs su cr /mnt/@
+#for subvol in ${subvols[@]}; do
+#    btrfs su cr /mnt/@$subvol
+#done
+#
+#umount /mnt 
+#
+mount_args='noatime,commit=120,compress=zstd,space_cache=v2,discard=async,nodiratime,ssd'
+
+mount -o "$mount_args,subvol=@" $root_part /mnt/
+
+for subvol in ${subvols[@]}; do
+#    mkdir /mnt/$subvol 
+    mount -o "$mount_args,subvol=@$subvol" $root_part /mnt/$subvol 
+done
+
+# swapsize=8g
+# btrfs filesystem mkswapfile --size $swapsize --uuid clear  /mnt/swap/swap_file
+
+
+# mkdir /mnt/boot
+mount $boot_part /mnt/boot
+
+packages=(base base-devel linux linux-firmware linux-headers btrfs-progs amd-ucode neovim
+    tmux zsh refind gptfdisk sbsigntools booster git wpa_supplicant ) 
+
+# basestrap -i /mnt ${packages[@]}
+# fstabgen -U /mnt >> /mnt/etc/fstab
+# sed 's/ParallelDownloads = 1/ParallelDownloads = 5' -i /mnt/etc/pacman.conf
+
+# artix-chroot /mnt ./second
+
+
+
+
+
+

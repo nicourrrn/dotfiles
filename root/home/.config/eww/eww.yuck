@@ -1,0 +1,168 @@
+
+(defwidget left []
+  (box :class "left" :orientation "h"
+       (label :text "left")
+  )
+)
+
+(defwidget center []
+  (box :class "center" :orientation "h"
+       (label :text "center")
+  )
+)
+
+
+
+
+
+;-------------------------------------------------
+    
+(defwidget bat [] 
+  (box :class "bat" :vexpand false :hexpand false
+    (circular-progress :value "${EWW_BATTERY.BAT1.capacity}" :class "batbar" :thickness 4 
+      (button :class "iconbat" :limit-width 2
+              :tooltip "battery on ${EWW_BATTERY.BAT1.capacity}%"
+              :show_truncated false
+              :wrap false :onclick "/home/nicourrrn/.config/eww/scripts/pop system"
+              ""
+              
+      )
+    )
+  )
+)
+
+
+(defwidget mem [] 
+  (box :class "mem" :vexpand false :hexpand false
+    (circular-progress :value "${EWW_RAM.used_mem / EWW_RAM.total_mem * 100}"
+                       :class "membar" :thickness 4
+      (button :class "iconmem" :limit-width 2
+              :tooltip "using ${round(EWW_RAM.used_mem / EWW_RAM.total_mem * 100, 1)}% ram"
+              :show_truncated false :wrap false ""
+      )
+    )
+  )
+)
+
+(defwidget sep []
+  (box :class "module-2" :vexpand false :hexpand false
+       (label :class "sep" :text "|")
+  )
+)
+
+
+(defvar clock_show false)
+(defpoll time :interval "5s" "date '+%H:%M'")
+(defpoll date :interval "1m" "date '+%d.%m'")
+(defwidget clock_module [] 
+  (eventbox :onhover "eww update clock_show=true"
+            :onhoverlost "eww update clock_show=false"
+
+    (box :class "module" :space-evenly false :orientation "h" :spacing 3
+         (label :text time :class "clock_time")
+         (revealer :transition "slideleft" :reveal clock_show
+                   :duration "350ms" 
+            (button :class "clock_date"
+                    :onclick "/home/nicourrrn/.config/eww/scripts/pop calendar" date)
+         )
+    )
+   )
+)
+
+(defwidget right []
+  (box :class "right" :orientation "h"
+       :space-evenly false :haligh "end" 
+       (bat)
+       (mem)
+       (sep)
+       (clock_module)
+  )
+)
+
+(defwindow bar
+          :monitor 0
+          :geometry (geometry :x "0%"
+                       :y "9px"
+                       :width "98%"
+                       :height "30px"
+                       :anchor "top center")
+          :stacking "fg"
+          :exclusive true
+          :windowtype "dock"
+  (box :class "bar" :orientation "h" 
+      (left) (center) (right)))
+ 
+
+
+;-------------------------------------------------
+
+
+(defpoll cal_day :interval "20h" "date '+%d'")
+(defpoll cal_year :interval "20h" "date '+%Y'")
+(defwindow calendar
+  :monitor 0
+  :geometry (geometry 
+                :x "20px" :y "2%"
+                :anchor "top right"
+                :width "270px" :height "60px"
+            )
+  (box :class "cal" :orientation "v"
+       (box :class "cal-in"
+            (calendar :class "cal"
+                      :day cal_day :year cal_year 
+            )
+       )
+  )
+)
+
+
+;-------------------------------------------------
+
+(defwindow system
+  :monitor 0
+  :geometry (geometry 
+                :x "20px" :y "2%"
+                :anchor "top right"
+                :width "270px" :height "60px"
+            )
+
+  (box 
+    :class "sys_win" :orientation "v" :space-evenly false
+    :hexpand false :vexpand false :spacing 0 
+    (box :class "sys_bat" :orientation "h" :space-evenly false
+      (circular-progress 
+        :value "${EWW_BATTERY.BAT1.capacity}" :class "sys_bat_prog"
+        :thickness 9 
+        (label :text "." :class "sys_bat_ico"
+               :limit-width 2 :show_truncated false
+               :wrap false)
+      )
+      (box :orientation "v" :space-evenly false :spacing 0 :hexpand false 
+           :vexpand false :spacing 0 
+        (label :text "battery" :haligh "start" 
+               :class "sys_bat_text" :limit-width 9
+               :show_truncated false :wrap false )
+        (label :text "${EWW_BATTERY.BAT1.capacity}%" :haligh "start" 
+               :class "sys_bat_text_sub"
+               :limit-width 22
+               :show_truncated false :wrap false)))
+        (label :text "━━━━━━━━━━━━━━━━━━━━" :class "sys_sep" :halign "center")
+    (box :class "sys_mem" :orientation "h" :space-evenly false :haligh "start" 
+      (circular-progress :value "${EWW_RAM.used_mem / EWW_RAM.total_mem * 100}"
+          :class "sys_mem_prog" :thickness 9
+        (label :text "." :class "sys_mem_ico" :limit-width 2 
+               :show_truncated false :wrap false :angle 0.0))
+      (box :orientation "v" :space-evenly false :spacing 0 :hexpand false :vexpand false
+        (label :text "${round(EWW_RAM.used_mem / 1024 / 1024 / 1024, 1)} | ${round(EWW_RAM.total_mem / 1024 / 1024 / 1024, 1)}"
+
+               :haligh "start" :class "sys_mem_text_sub"
+               :limit-width 22 :show_truncated false 
+               :wrap false)
+        (label :text "${round((EWW_RAM.total_mem - EWW_RAM.used_mem) / 1024 / 1024 / 1024, 1)}" :wrap false
+               :haligh "start" :class "sys_mem_text_sub"
+               :limit-width 22 :show_truncated false )
+      )
+    )
+  )
+)
+

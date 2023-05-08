@@ -1,0 +1,3 @@
+type    = process
+command = /home/nicourrrn/.config/dinit.d/scripts/dunst
+logfile = /home/nicourrrn/.local/log/dunst.log

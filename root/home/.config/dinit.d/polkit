@@ -1,0 +1,3 @@
+type    = process
+command = /home/nicourrrn/.config/dinit.d/scripts/polkit-kde
+logfile = /home/nicourrrn/.local/log/polkit-kde.log

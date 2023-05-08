@@ -1,0 +1,9 @@
+#! /bin/zsh
+
+sleep 5
+
+dinit -q & 
+telegram-desktop &
+wl-paste -t text --watch clipman store &
+
+dunstify 'Hello!' "Start at $(date)"

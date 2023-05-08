@@ -1,0 +1,53 @@
+#!/bin/sh 
+
+
+system() {
+    LOCK_FILE="$HOME/.cache/eww-system.lock"
+
+    run() {
+        # eww -c $HOME/.config/eww/bar open calendar
+        eww open system 
+    }
+
+    # Open widgets
+    if [[ ! -f "$LOCK_FILE" ]]; then
+        touch "$LOCK_FILE"
+        run && echo "ok good!"
+    else
+        eww close system 
+        rm "$LOCK_FILE" && echo "closed"
+    fi
+}
+
+calendar() {
+    LOCK_FILE="$HOME/.cache/eww-calendar.lock"
+
+    run() {
+        # eww -c $HOME/.config/eww/bar open calendar
+        eww open calendar
+    }
+
+    # Open widgets
+    if [[ ! -f "$LOCK_FILE" ]]; then
+       # eww close system music_win audio_ctl
+        touch "$LOCK_FILE"
+        run && echo "ok good!"
+    else
+        eww close calendar
+        rm "$LOCK_FILE" && echo "closed"
+    fi
+}
+
+case $1 in
+    "system")
+        system
+        ;;
+ 
+    "calendar")
+        calendar
+        ;;
+   *)
+        dunstify "Eww error" "I canot found a $1"
+        ;;
+esac
+        

@@ -1,0 +1,2 @@
+type    = process
+command = /home/nicourrrn/.config/dinit.d/scripts/pipewire
