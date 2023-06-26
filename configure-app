@@ -4,3 +4,8 @@ function zplug_install() {
     source ~/.config/zsh/.zshrc
     zplug install
 }
+
+function download_config() {
+    cd /tmp && git clone https://github.com/nicourrrn/dotfiles.git
+    cp /tmp/dotfiles/home/* ~/
+}
