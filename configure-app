@@ -5,6 +5,10 @@ function zplug_install() {
     zplug install
 }
 
+function nvim_conf() {
+    echo "Run in nvim command 'PackerSync'"
+}
+
 function download_config() {
     cd /tmp && git clone https://github.com/nicourrrn/dotfiles.git
     cp /tmp/dotfiles/home/* ~/

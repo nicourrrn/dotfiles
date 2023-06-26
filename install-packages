@@ -13,7 +13,7 @@ ui_packages() {
 
 console_utils() {
     yay -S lsd thefuck just zplug dust ttf-hack-nerd btop htop tree fzf\
-        ranger ripdrag sad bat fd
+        ranger ripdrag sad bat fd nvim-packer-git
 }
 
 ui_utils() {
