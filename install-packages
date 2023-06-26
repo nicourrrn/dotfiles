@@ -1,0 +1,33 @@
+#!/bin/bash
+
+
+system_packages() {
+    yay -S dhclient openssh oh-my-zsh-git \
+        wireplumber pipewire-pulse ttf-hack polkit-kde-agent
+}
+
+ui_packages() {
+    yay -S hyprland-nvidia nvidia dropbox eww-wayland dunst fuzzel kitty\
+        xdg-desktop-portal-hyprland lemurs-git 
+}
+
+console_utils() {
+    yay -S lsd thefuck just zplug dust ttf-hack-nerd btop htop tree fzf\
+        ranger ripdrag sad bat fd
+}
+
+ui_utils() {
+    yay -S firefox thunar qt5ct keepassxc telegram-desktop discord spotify steam
+}
+
+program_langs() {
+    yay -S rustup go python flutter node yarn llvm lldb
+}
+
+echo "Functions
+system_packages
+ui_packages
+console_utils
+ui_utils
+program_langs"
+

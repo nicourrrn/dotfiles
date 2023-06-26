@@ -1,0 +1,295 @@
+window:
+  dimensions:
+    columns: 80
+    lines: 30
+
+  padding: 
+    x: 0
+    y: 0
+
+
+  dynamic_padding: false
+
+  decorations: Full
+
+  startup_mode: Windowed 
+
+  opacity: 0.8
+
+scrolling: 
+  history: 100
+  multiplier: 3
+
+tabspace: 4
+
+schemes:
+  gruvbox_material_hard_dark: &gruvbox_hard_dark
+    primary:
+      background: '0x1d2021'
+      foreground: '0xd4be98'
+    normal:
+      black:   '0x32302f'
+      red:     '0xea6962'
+      green:   '0xa9b665'
+      yellow:  '0xd8a657'
+      blue:    '0x7daea3'
+      magenta: '0xd3869b'
+      cyan:    '0x89b482'
+      white:   '0xd4be98'
+    bright:
+      black:   '0x32302f'
+      red:     '0xea6962'
+      green:   '0xa9b665'
+      yellow:  '0xd8a657'
+      blue:    '0x7daea3'
+      magenta: '0xd3869b'
+      cyan:    '0x89b482'
+      white:   '0xd4be98'
+  gruvbox_material_medium_dark: &gruvbox_medium_dark
+    primary:
+      background: '0x282828'
+      foreground: '0xd4be98'
+    normal:
+      black:   '0x3c3836'
+      red:     '0xea6962'
+      green:   '0xa9b665'
+      yellow:  '0xd8a657'
+      blue:    '0x7daea3'
+      magenta: '0xd3869b'
+      cyan:    '0x89b482'
+      white:   '0xd4be98'
+    bright:
+      black:   '0x3c3836'
+      red:     '0xea6962'
+      green:   '0xa9b665'
+      yellow:  '0xd8a657'
+      blue:    '0x7daea3'
+      magenta: '0xd3869b'
+      cyan:    '0x89b482'
+      white:   '0xd4be98'
+  gruvbox_material_soft_dark: &gruvbox_soft_dark
+    primary:
+      background: '0x32302f'
+      foreground: '0xd4be98'
+    normal:
+      black:   '0x45403d'
+      red:     '0xea6962'
+      green:   '0xa9b665'
+      yellow:  '0xd8a657'
+      blue:    '0x7daea3'
+      magenta: '0xd3869b'
+      cyan:    '0x89b482'
+      white:   '0xd4be98'
+    bright:
+      black:   '0x45403d'
+      red:     '0xea6962'
+      green:   '0xa9b665'
+      yellow:  '0xd8a657'
+      blue:    '0x7daea3'
+      magenta: '0xd3869b'
+      cyan:    '0x89b482'
+      white:   '0xd4be98'
+  gruvbox_material_hard_light: &gruvbox_hard_light
+    primary:
+      background: '0xf9f5d7'
+      foreground: '0x654735'
+    normal:
+      black:   '0x654735'
+      red:     '0xc14a4a'
+      green:   '0x6c782e'
+      yellow:  '0xb47109'
+      blue:    '0x45707a'
+      magenta: '0x945e80'
+      cyan:    '0x4c7a5d'
+      white:   '0xf2e5bc'
+    bright:
+      black:   '0x654735'
+      red:     '0xc14a4a'
+      green:   '0x6c782e'
+      yellow:  '0xb47109'
+      blue:    '0x45707a'
+      magenta: '0x945e80'
+      cyan:    '0x4c7a5d'
+      white:   '0xf2e5bc'
+  gruvbox_material_medium_light: &gruvbox_medium_light
+    primary:
+      background: '0xfbf1c7'
+      foreground: '0x654735'
+    normal:
+      black:   '0x654735'
+      red:     '0xc14a4a'
+      green:   '0x6c782e'
+      yellow:  '0xb47109'
+      blue:    '0x45707a'
+      magenta: '0x945e80'
+      cyan:    '0x4c7a5d'
+      white:   '0xeee0b7'
+    bright:
+      black:   '0x654735'
+      red:     '0xc14a4a'
+      green:   '0x6c782e'
+      yellow:  '0xb47109'
+      blue:    '0x45707a'
+      magenta: '0x945e80'
+      cyan:    '0x4c7a5d'
+      white:   '0xeee0b7'
+  gruvbox_material_soft_light: &gruvbox_soft_light
+    primary:
+      background: '0xf2e5bc'
+      foreground: '0x654735'
+    normal:
+      black:   '0x654735'
+      red:     '0xc14a4a'
+      green:   '0x6c782e'
+      yellow:  '0xb47109'
+      blue:    '0x45707a'
+      magenta: '0x945e80'
+      cyan:    '0x4c7a5d'
+      white:   '0xe6d5ae'
+    bright:
+      black:   '0x654735'
+      red:     '0xc14a4a'
+      green:   '0x6c782e'
+      yellow:  '0xb47109'
+      blue:    '0x45707a'
+      magenta: '0x945e80'
+      cyan:    '0x4c7a5d'
+      white:   '0xe6d5ae'
+  nord_dark: &nord_dark
+    primary:
+      background: '#2e3440'
+      foreground: '#d8dee9'
+      dim_foreground: '#a5abb6'
+    cursor:
+      text: '#2e3440'
+      cursor: '#d8dee9'
+    vi_mode_cursor:
+      text: '#2e3440'
+      cursor: '#d8dee9'
+    selection:
+      text: CellForeground
+      background: '#4c566a'
+    search:
+      matches:
+        foreground: CellBackground
+        background: '#88c0d0'
+      footer_bar:
+        background: '#434c5e'
+        foreground: '#d8dee9'
+    normal:
+      black: '#3b4252'
+      red: '#bf616a'
+      green: '#a3be8c'
+      yellow: '#ebcb8b'
+      blue: '#81a1c1'
+      magenta: '#b48ead'
+      cyan: '#88c0d0'
+      white: '#e5e9f0'
+    bright:
+      black: '#4c566a'
+      red: '#bf616a'
+      green: '#a3be8c'
+      yellow: '#ebcb8b'
+      blue: '#81a1c1'
+      magenta: '#b48ead'
+      cyan: '#8fbcbb'
+      white: '#eceff4'
+    dim:
+      black: '#373e4d'
+      red: '#94545d'
+      green: '#809575'
+      yellow: '#b29e75'
+      blue: '#68809a'
+      magenta: '#8c738c'
+      cyan: '#6d96a5'
+      white: '#aeb3bb'
+
+
+colors: *gruvbox_soft_dark
+
+
+font: 
+  normal:
+    family: HackNerdFont 
+    style: Light
+
+  bolt: 
+    family: HackNerdFont 
+    style: Medium
+
+  italic:
+    family: HackNerdFont 
+    style: "Light Italic"
+
+  size: 11.0
+
+  offset:
+    x: 0
+    y: 0
+
+  glyph_offset:
+    x: 0
+    y: 0
+
+  
+  draw_bold_text_with_bright_colors: true
+  custom_cursor_colors: true
+
+
+
+
+
+bell: 
+  animation: EaseOutExpo
+  color: '0xffffff'
+  duration: 1
+
+key_bindings:
+  - { key: V, mods: Command, action: Paste }
+  - { key: C, mods: Command, action: Copy }
+  #  - { key: N, mods: Command, action: SpanwNewInstance }
+
+mouse:
+
+  double_click: { threshold: 300 }
+  triple_click: { threshold: 300 }
+
+  hide_when_typing: true
+
+  hints: 
+    launcher:
+      program: xdg-open
+      args: []
+
+    modifiers: Control
+
+  selection:
+    semantic_escape_chars: ",|`|:\"' ()[]{}<>"
+
+    save_to_clipboard: false
+
+mouse_bindings:
+  - { mouse: Middle, action: PasteSelection }
+
+cursor:
+  style: Block
+  unfocused_hollow: true
+
+dynamic_title: true
+
+live_config_reload: true
+
+debug:
+  render_timer: false 
+  persistent_logging: false
+
+  log_level: OFF
+
+  print_events: true
+  
+  ref_test: false 
+
+
+shell: 
+  program: tmux 
+

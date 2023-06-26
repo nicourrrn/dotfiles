@@ -1,0 +1,6 @@
+#!/bin/bash
+function zplug_install() {
+    source /ush/share/zsh/scripts/zplug/init.zsh
+    source ~/.config/zsh/.zshrc
+    zplug install
+}

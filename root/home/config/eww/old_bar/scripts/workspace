@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+get-workspaces() {
+    hyprctl workspaces -j | jq 'map(.id)|sort_by(.)' | rg -U '\n' --replace " "
+}
+
+socat -u UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | while read -r line;do
+    line=$(echo $line | rg '^workspace>>' --replace "" )
+    if [[ $line != "" ]]; then 
+        echo "{  \"actual\": $line, \"works\": $(get-workspaces) }"
+    fi
+done
+
+
+

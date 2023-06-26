@@ -1,0 +1,45 @@
+* {
+    all: unset;
+    font-family: Hack;
+    color: #ebdbb2;
+}
+
+$bg: #282828;
+
+.bar {
+   background-color: $bg ; 
+   border-radius: 8px;
+}
+
+.clock_date {
+    margin: 0 0 0 20px;
+}
+
+.sep {
+    font-weight: bold;
+    font-size: 22px;
+    margin: 0 8px;
+}
+
+
+.mem, .bar {
+    border-radius: 16px;
+    margin: 0 10px;
+}
+.membar, .batbar {
+    background-color: black;
+    border-radius: 10px;
+}
+
+
+.cal { 
+    background-color: $bg;
+    font-size: 16px;
+    font-weight: normal;
+    &.highlight {
+        color: #d79921;
+    }
+    padding: 3px;
+    border-radius: 5px;
+}
+

@@ -1,0 +1,29 @@
+(include "./bar/widgets.yuck")
+
+
+
+(defwindow bar 
+  :monitor 0
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "99%"
+                      :height "40px"
+                      :anchor "top center")
+  :stacking "fg"
+  :exclusive true
+  (centerbox :orietation "h"
+    (left_side)
+    (center_side)
+    (right_side))
+) 
+
+
+(defwindow calendar
+	:geometry (geometry :x "-20px" 
+						:y "7%" 
+                        :anchor "top right"
+						:width "270px" 
+						:height "60px")
+(cal))
+
+

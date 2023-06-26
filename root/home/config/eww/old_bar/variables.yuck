@@ -1,0 +1,3 @@
+
+(deflisten pwvolume   :initial "{}"     `tail -F /tmp/pw-volume-status`)
+(deflisten bright     :initial "100"     `tail -F /tmp/bright-status`)

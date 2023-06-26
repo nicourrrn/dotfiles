@@ -1,0 +1,60 @@
+#!/bin/bash
+
+set_localhost() {
+    echo crml_world > /etc/hostname 
+
+    echo 127.0.0.1	localhost >> /etc/hosts
+    echo ::1		localhost >> /etc/hosts
+    echo 127.0.1.1	crml_world.localdomain	crml_world >> /etc/hosts
+}
+
+set_lang() {
+    sed -i 's/#en_US\.UTF-8/en_US\.UTF-8/g' /etc/locale.gen
+    sed -i 's/#uk_UA\.UTF-8/uk_UA\.UTF-8/g' /etc/locale.gen
+    locale-gen
+}
+
+set_user() {
+    export EDITOR=nvim
+    visudo
+    useradd -m -G wheel,seat,video,audio,tty,input,lp,storage,users,network,power -s /bin/zsh nicourrrn
+    passwd nicourrrn
+}
+
+blackarch() {
+    cd /tmp
+    curl -O https://blackarch.org/strap.sh
+    chmod +x strap.sh
+    sudo ./strap.sh
+    sudo pacman -Syu
+}
+
+chaotic() {
+    pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+    pacman-key --lsign-key 3056513887B78AEB
+     pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+
+    echo '
+[chaotic-aur]
+Server = https://geo-mirror.chaotic.cx/$repo/$arch
+    ' >> /etc/pacman.conf
+}
+
+upgrade_pacman() {
+    sed -ie 's/#Par/Par/' /etc/pacman.conf
+    pacman -Sy
+    blackarch
+    chaotic
+    pacman -Sy yay
+}
+echo "Functions: 
+set_localhost
+set_lang
+set_user
+upgrade_pacman
+set_user"
+
+
+
+
+

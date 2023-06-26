@@ -1,0 +1,73 @@
+#!/bin/bash
+
+subvols=('home' 'tmp' 'var' 'snapshot' )
+
+# boot_part='/dev/nvme0n1p1'
+# root_part='/dev/nvme0n1p2'
+
+boot_part='/dev/sda1'
+root_part='/dev/sda2'
+
+create_btrfs() {
+    mkfs.btrfs $root_part
+    mount $root_part /mnt
+    btrfs su cr /mnt/@
+    for subvol in ${subvols[@]}; do
+        btrfs su cr /mnt/@$subvol
+    done
+    btrfs filesystem mkswapfile --size 8g --uuid clear  /mnt/@/swap
+    umount /mnt 
+}
+
+create_boot() {
+    mkfs.vfat $boot_part
+}
+
+
+mount_args='noatime,commit=120,compress=zstd,space_cache=v2,discard=async,nodiratime,ssd'
+
+mount_system() {
+    mount -o "$mount_args,subvol=@" $root_part /mnt/
+    for subvol in ${subvols[@]}; do
+        [ ! -d /mnt/$subvol ] && mkdir /mnt/$subvol 
+        mount -o "$mount_args,subvol=@$subvol" $root_part /mnt/$subvol 
+    done
+    mkdir /mnt/boot
+    mount $boot_part /mnt/boot
+}
+
+
+packages=(base base-devel dhclient linux linux-firmware linux-headers btrfs-progs amd-ucode neovim
+    zsh gptfdisk sbsigntools booster git wpa_supplicant wget iw seat) 
+
+install_system() {
+    pacstrap -i /mnt ${packages[@]}
+    genfstab -U /mnt >> /mnt/etc/fstab
+}
+
+get_uuid() {
+    blkid /dev/$1 -s UUID | cut -f2 -d" " | cut -f2 -d "=" | sed "s/\"//g"
+}
+
+
+install_bootmgr() {
+    mount $boot_part /boot
+    bootctl install
+    echo "title ArchLinux
+linux vmlinuz-linux
+initrd amd-ucode.img
+initrd booster-linux.img
+options root=\"$(get_uuid $1)\" rootflags=\"subvol=@\" add_efi_memmap" > /boot/loader/entries/arch.conf
+}
+
+echo "Functions: 
+create_btrfs
+create_boot
+mount_system
+install_system
+install_bootmgr
+"
+
+
+
+

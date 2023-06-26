@@ -1,0 +1,26 @@
+* {
+    all: unset;
+}
+
+.volume_bar trough highlight {
+    background-image: linear-gradient(to right, #afcee0 30%, #a1bdce 50%, #77a5bf 100% *50);
+}
+
+.bright_bar {
+    background-image: linear-gradient(to right, #afcee0 30%, #a1bdce 50%, #77a5bf 100% *50);
+}
+
+.scale_bar {
+    margin: 10px 16px 0px 10px;
+}
+
+.bat_bar {
+    color: #afbea2;
+    background-color: #38384d;
+    border-radius: 10px;
+}
+
+scale {
+    all: unset;
+    min-width: 70px;
+}
