@@ -1,6 +1,6 @@
 #!/bin/bash
 
-subvols=('home' 'var' '.snapshots' '.swap')
+subvols=('home' 'var' '.swap')
 
 boot_part='/dev/nvme0n1p1'
 root_part='/dev/nvme0n1p2'
