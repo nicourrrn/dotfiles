@@ -2,14 +2,14 @@
 
 subvols=('home' 'var' '.snapshots' '.swap')
 
-# boot_part='/dev/nvme0n1p1'
-# root_part='/dev/nvme0n1p2'
+boot_part='/dev/nvme0n1p1'
+root_part='/dev/nvme0n1p2'
 
-boot_part='/dev/sda1'
-root_part='/dev/sda2'
+# boot_part='/dev/sda1'
+# root_part='/dev/sda2'
 
 create_btrfs() {
-    mkfs.btrfs $root_part
+    mkfs.btrfs -f $root_part
     mount $root_part /mnt
     btrfs su cr /mnt/@
     for subvol in ${subvols[@]}; do
@@ -34,12 +34,12 @@ mount_system() {
     done
     mkdir /mnt/boot
     mount $boot_part /mnt/boot
-    swapon /mnt/@.swap/swap
+    swapon /mnt/.swap/swapfile
 }
 
 
 packages=(base base-devel dhclient linux linux-firmware linux-headers btrfs-progs amd-ucode neovim
-    zsh gptfdisk sbsigntools booster git wpa_supplicant wget iw seat) 
+    zsh gptfdisk sbsigntools booster git wpa_supplicant wget iw seatd) 
 
 install_system() {
     pacstrap -i /mnt ${packages[@]}
@@ -58,7 +58,7 @@ install_bootmgr() {
 linux vmlinuz-linux
 initrd amd-ucode.img
 initrd booster-linux.img
-options root=\"$(get_uuid $1)\" rootflags=\"subvol=@\" add_efi_memmap" > /boot/loader/entries/arch.conf
+options root=\"UUID=$(get_uuid $1)\" rootflags=\"subvol=@\" add_efi_memmap nvidia_drm.modeset=1" > /boot/loader/entries/arch.conf
 }
 
 echo "Functions: 
