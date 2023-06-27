@@ -2,13 +2,13 @@
 
 
 system_packages() {
-    yay -S dhclient openssh oh-my-zsh-git iwd \
+    yay -S dhclient openssh oh-my-zsh-git iwd zip unzip \
         wireplumber pipewire-pulse ttf-hack polkit-kde-agent snapper
 }
 
 ui_packages() {
     yay -S hyprland-nvidia nvidia dropbox eww-wayland dunst fuzzel kitty\
-        xdg-desktop-portal-hyprland lemurs-git 
+        xdg-desktop-portal-hyprland lemurs-git grim slurp wl-clipman
 }
 
 console_utils() {
@@ -17,7 +17,8 @@ console_utils() {
 }
 
 ui_utils() {
-    yay -S firefox thunar qt5ct keepassxc telegram-desktop discord spotify steam
+    yay -S firefox thunar qt5ct keepassxc telegram-desktop discord spotify steam \
+        easyeffects
 }
 
 program_langs() {
