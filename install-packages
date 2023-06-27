@@ -3,7 +3,7 @@
 
 system_packages() {
     yay -S dhclient openssh oh-my-zsh-git \
-        wireplumber pipewire-pulse ttf-hack polkit-kde-agent
+        wireplumber pipewire-pulse ttf-hack polkit-kde-agent snapper
 }
 
 ui_packages() {

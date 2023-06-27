@@ -1,6 +1,6 @@
 #!/bin/bash
 
-subvols=('home' 'var' 'snapshot' )
+subvols=('home' 'var' '.snapshots' '.swap')
 
 # boot_part='/dev/nvme0n1p1'
 # root_part='/dev/nvme0n1p2'
@@ -15,7 +15,7 @@ create_btrfs() {
     for subvol in ${subvols[@]}; do
         btrfs su cr /mnt/@$subvol
     done
-    btrfs filesystem mkswapfile --size 8g --uuid clear  /mnt/@/swap
+    btrfs filesystem mkswapfile --size 8g --uuid clear  /mnt/@.swap/swapfile
     umount /mnt 
 }
 
@@ -34,6 +34,7 @@ mount_system() {
     done
     mkdir /mnt/boot
     mount $boot_part /mnt/boot
+    swapon /mnt/@.swap/swap
 }
 
 

@@ -9,6 +9,11 @@ function nvim_conf() {
     echo "Run in nvim command 'PackerSync'"
 }
 
+function snapper_conf() {
+    snapper -c root create-config /
+    echo "Edit config file of root in /etc/snapper/configs/"
+}
+
 function download_config() {
     cd /tmp && git clone https://github.com/nicourrrn/dotfiles.git
     cp /tmp/dotfiles/home/* ~/
