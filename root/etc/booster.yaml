@@ -1,0 +1,3 @@
+compression: zstd
+
+modules_force_load: nvidia
