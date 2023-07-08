@@ -44,7 +44,6 @@ zplug "plugins/rand-quote", from:oh-my-zsh
 zplug "plugins/ripgrep", from:oh-my-zsh
 zplug "plugins/ssh-agent", from:oh-my-zsh
 zplug "plugins/yarn", from:oh-my-zsh
-zplug "plugins/tmux", from:oh-my-zsh
 zplug "plugins/themes", from:oh-my-zsh
 zplug "plugins/thefuck", from:oh-my-zsh
 

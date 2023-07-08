@@ -7,22 +7,23 @@ system_packages() {
 }
 
 ui_packages() {
-    yay -S hyprland-nvidia nvidia dropbox eww-wayland dunst fuzzel kitty\
-        xdg-desktop-portal-hyprland lemurs-git grim slurp wl-clipman
+    yay -S hyprland-nvidia nvidia-dkms dropbox eww-wayland dunst fuzzel kitty\
+        xdg-desktop-portal-hyprland lemurs-git grim slurp wl-clipman \
+        hyprpaper
 }
 
 console_utils() {
     yay -S lsd thefuck just zplug dust ttf-hack-nerd btop htop tree fzf\
-        ranger ripdrag sad bat fd nvim-packer-git
+        ranger ripdrag sad bat fd nvim-packer-git ripgrep yt-dlp
 }
 
 ui_utils() {
     yay -S firefox thunar qt5ct keepassxc telegram-desktop discord spotify steam \
-        easyeffects
+        easyeffects playerctl brightnessctl vlc gruvbox-material-gtk-theme-git
 }
 
 program_langs() {
-    yay -S rustup go python flutter node yarn llvm lldb
+    yay -S rustup go python flutter nodejs yarn llvm lldb
 }
 
 echo "Functions
