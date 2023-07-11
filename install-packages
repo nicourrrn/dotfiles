@@ -23,7 +23,7 @@ ui_utils() {
 }
 
 program_langs() {
-    yay -S rustup go python flutter nodejs yarn llvm lldb
+    yay -S rustup go python flutter nodejs yarn llvm lldb httpie-desktop-bin
 }
 
 echo "Functions
