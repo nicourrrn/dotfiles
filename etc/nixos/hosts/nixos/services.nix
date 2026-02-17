@@ -1,6 +1,5 @@
 { pkgs, ... }:
 {
-  # Enable Services
   programs.direnv.enable = true;
   services.upower.enable = true;
   programs.dconf.enable = true;
@@ -8,7 +7,7 @@
     enable = true;
     implementation = "broker";
     packages = with pkgs; [
-      xfce.xfconf
+      xfconf
       gnome2.GConf
     ];
   };
@@ -20,34 +19,4 @@
   # services.auto-cpufreq.enable = true;
   # services.gnome.core-shell.enable = true;
   # services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
-
-  security.polkit.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    polkit_gnome
-    at-spi2-atk
-    qt6.qtwayland
-    psi-notify
-    poweralertd
-    playerctl
-    psmisc
-    grim
-    slurp
-    imagemagick
-    swappy
-    ffmpeg_6-full
-    wl-screenrec
-    wl-clipboard
-    wl-clip-persist
-    cliphist
-    xdg-utils
-    wtype
-    wlrctl
-    waybar
-    rofi
-    dunst
-    avizo
-    wlogout
-    gifsicle
-  ];
 }

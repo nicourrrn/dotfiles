@@ -5,6 +5,12 @@
     "amdgpu"
   ];
 
+  services.xserver.enable = true;
+  services.xserver = {
+    layout = "gb";
+    xkbVariant = "extd";
+  };
+
   hardware = {
     graphics = {
       enable = true;

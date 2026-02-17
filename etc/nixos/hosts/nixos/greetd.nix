@@ -1,10 +1,15 @@
 { pkgs, ... }: {
-  services.greetd = {
+  # services.greetd = {
+  #   enable = true;
+  #   settings = {
+  #     default_session = {
+  #       command = "${pkgs.tuigreet}/bin/tuigreet --cmd start-hyprland";
+  #     };
+  #   };
+  # };
+
+  services.displayManager.dms-greeter = {
     enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --cmd Hyprland";
-      };
-    };
+    compositor.name = "hyprland";
   };
 }

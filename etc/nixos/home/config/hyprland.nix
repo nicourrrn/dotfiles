@@ -3,6 +3,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
+    systemd.enable = false;
   };
   wayland.windowManager.hyprland.settings = {
     "$rosewater" = "rgb(f4dbd6)";
@@ -86,7 +87,7 @@
     "$mainMod" = "SUPER";
     general = {
       border_size = "2";
-      no_border_on_floating = "yes";
+      # no_border_on_floating = "yes";
 
       gaps_in = "3";
       gaps_out = "6";
@@ -120,9 +121,9 @@
     };
     exec-once = [
       "alacritty"
-      "waybar"
-      "hyprpaper"
-      "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+      # "waybar"
+      # "hyprpaper"
+      # "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
     ];
     monitor = [
       "eDP-1, highres@60.00Hz, 0x0, 1"
@@ -207,7 +208,7 @@
       fullscreen_opacity = "1";
     };
 
-    layerrule = "blur, logout_dialog";
+    layerrule = "blur on";
 
     animations = {
       enabled = "yes";

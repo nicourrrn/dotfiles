@@ -19,12 +19,4 @@
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
-  # environment.systemPackages = with pkgs; [
-  #   nuspell
-  #   hyphen
-  #   hunspell
-  #   hunspellDicts.en_US
-  #   hunspellDicts.uk_UA
-  #   hunspellDicts.ru_RU
-  # ];
 }

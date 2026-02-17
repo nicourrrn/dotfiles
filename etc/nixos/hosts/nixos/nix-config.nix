@@ -1,7 +1,9 @@
 { ... }:
 {
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.android_sdk.accept_license = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    android_sdk.accept_license = true;
+  };
 
   nix.settings  = {
     trusted-users = [ "root" "nicourrrn" ];
@@ -29,4 +31,5 @@
    dates = "weekly";
    options = "--delete-older-than 7d";
   };
+
 }

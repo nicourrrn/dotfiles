@@ -1,6 +1,5 @@
 { pkgs, flake-packages, ... }:
 with pkgs; [
-  zed-editor
   yaak
   nodePackages.nodejs
   nix-output-monitor
@@ -24,7 +23,12 @@ with pkgs; [
   ngrok
   fvm
   godot
+  fyne
+  # godot-export-templates-bin
   devenv
   flake-packages.fasm2.packages.${stdenv.hostPlatform.system}.default
-  # jupyter
+  # flake-packages.zed-editor.packages.${stdenv.hostPlatform.system}.default
+  zed-editor
+  typst
+  typst-live
 ]

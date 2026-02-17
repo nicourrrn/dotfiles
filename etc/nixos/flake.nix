@@ -24,9 +24,15 @@
       url = "github:Gaurav-Gosain/tuios";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     devenv.url = "github:cachix/devenv/v1.10";
     nixified-ai.url = "github:nixified-ai/flake";
     fasm2.url = "github:nicourrrn/fasm2-flake";
+    zed-editor.url = "github:zed-industries/zed";
+    polymc.url = "github:PolyMC/PolyMC";
   };
 
   outputs =
@@ -35,19 +41,19 @@
       system = "x86_64-linux";
     in
     {
-      devShells.${system} = {
-        python = devenv.lib.mkShell {
-          modules = [
-            ./home/enviroments/python.nix
-          ];
-        };
-      };
+      # devShells.${system} = {
+      #   python = devenv.lib.mkShell {
+      #     modules = [
+      #       ./home/enviroments/python.nix
+      #     ];
+      #   };
+      # };
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs; flake-packages = inputs;};
         modules = [
-          ./hosts/nixos
           ./home
+          ./hosts/nixos
           ./hardware-configuration.nix
         ];
       };

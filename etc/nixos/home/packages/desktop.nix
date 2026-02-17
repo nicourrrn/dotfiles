@@ -1,12 +1,15 @@
-{ pkgs, ... }:
+{ pkgs, flake-packages, ... }:
 with pkgs; [
+  vesktop
   gparted
   keepassxc
-  telegram-desktop
-  steam
   protontricks
   qbittorrent-enhanced
-  vesktop
-  zoom-us
+  steam
   syncthing
+  telegram-desktop
+  zoom-us
+  dms-shell
+  mailspring
+  # flake-packages.quickshell.packages.${stdenv.hostPlatform.system}.default
 ]

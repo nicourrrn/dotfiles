@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -9,8 +9,4 @@
     pulse.enable = true;
     jack.enable = true;
   };
-  environment.systemPackages = with pkgs; [
-    pamixer
-    pavucontrol
-  ];
 }

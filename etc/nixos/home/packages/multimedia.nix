@@ -1,15 +1,16 @@
 { pkgs, flake-packages, ... }:
 with pkgs; [
-  vlc
-  easyeffects
-  spotify
-  spotifyd
-  libreoffice-qt6-fresh
-  gimp
-  loupe
   cava
+  easyeffects
+  gimp
+  libreoffice-qt6-fresh
+  loupe
   obs-studio
   obsidian
-  flake-packages.zen-browser.packages.${stdenv.hostPlatform.system}.default
+  spotify
+  spotifyd
+  vlc
+
   flake-packages.thorium.packages.${stdenv.hostPlatform.system}.thorium-avx2
+  flake-packages.zen-browser.packages.${stdenv.hostPlatform.system}.default
 ]

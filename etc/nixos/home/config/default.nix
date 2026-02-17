@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }@args :
+{ lib, ... }@args :
 let
   moduleDir = ./.;
   filesToImport = builtins.readDir moduleDir;

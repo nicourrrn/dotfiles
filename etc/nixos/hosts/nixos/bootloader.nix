@@ -1,8 +1,11 @@
 {pkgs, ...}:
 {
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 2;
+  # boot.loader.systemd-boot.enable = true;
+  boot.loader = {
+    limine.enable = true;
+    efi.canTouchEfiVariables = true;
+    timeout = 2;
+  };
   boot.initrd.enable = true;
   boot.initrd.verbose = false;
   boot.initrd.systemd.enable = true;
