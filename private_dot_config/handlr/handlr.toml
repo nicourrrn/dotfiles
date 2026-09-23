@@ -1,0 +1,3 @@
+[[handler]]
+exec = "zen-browswer --new-window %u"
+pattern = "tiktok.com"

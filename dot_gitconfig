@@ -1,5 +1,18 @@
 [user]
 	email = s57111702@gmail.com
 	name = Vadym Sorokin
+	signinkey = /home/nicourrrn/.ssh/github.pub
 [init]
 	defaultBranch = main
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[gpg "ssh"]
+	defaultKeyCommand = ssh-add -L

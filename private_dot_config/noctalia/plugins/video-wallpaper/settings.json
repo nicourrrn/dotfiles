@@ -1,0 +1,30 @@
+{
+  "activeBackend": "qt6-multimedia",
+  "automationMode": "random",
+  "automationTime": 300,
+  "fillMode": "fit",
+  "mpvSocket": "/tmp/mpv-socket",
+  "profile": "default",
+  "volume": 1,
+  "wallpapersFolder": "/home/nicourrrn/Pictures/Wallpaper",
+  "thumbCacheReady": true,
+  "enabled": true,
+  "eDP-1": {
+    "currentWallpaper": "/home/nicourrrn/Pictures/Wallpaper/164386-830461339.mp4",
+    "isPlaying": true,
+    "volume": 1,
+    "automation": false,
+    "automationMode": "random",
+    "automationTime": 300,
+    "hardwareAcceleration": false,
+    "profile": "default",
+    "fillMode": "",
+    "orientation": 0,
+    "isMuted": false
+  },
+  "monitorSpecific": false,
+  "automationCustomTime": [],
+  "HDMI-A-1": {
+    "currentWallpaper": "/home/nicourrrn/Pictures/Wallpaper/164386-830461339.mp4"
+  }
+}

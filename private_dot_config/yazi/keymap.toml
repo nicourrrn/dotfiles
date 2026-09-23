@@ -1,0 +1,9 @@
+[[mgr.prepend_keymap]]
+on = [ "c", "d" ]
+run = '''shell 'ripdrag "$@"' --detach'''
+desc = "Drag and Drop (ripdrag)"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "D" ]
+run = '''shell 'ripdrag -I "$1"' --detach'''
+desc = "Drag and Drop (встановити іконку з файлу)"
