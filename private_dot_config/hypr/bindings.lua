@@ -1,39 +1,77 @@
--- Keep only your personal keybinding overrides here. Add new bindings or
--- unbind defaults before replacing them.
+-- ==============================================================================
+-- Hyprland Keybindings (Vicinae + Kitty / Foot + Noctalia)
+-- ==============================================================================
 
--- See current bindings and descriptions:
---   omarchy menu keybindings --print
+local mod = "SUPER"
 
--- To disable every Omarchy default binding, set this in
--- ~/.config/hypr/hyprland.lua before require("default.hypr.omarchy"), then add
--- only the bindings you want below:
---   omarchy_default_bindings = false
+-- 1. Термінал та Мультиплексор (Kitty основний, Foot як fallback)
+hl.bind(mod .. " + Return", hl.dsp.exec_cmd("terminal-cwd"))
+hl.bind(mod .. " + ALT + Return", hl.dsp.exec_cmd("kitty -e zellij || foot -e zellij"))
 
--- To disable all preinstalled app/webapp bindings, set:
---   omarchy_preinstalled_bindings = false
+-- 2. Файлові менеджери (TUI Superfile / Yazi та GUI Thunar)
+hl.bind(mod .. " + E", hl.dsp.exec_cmd("kitty -e spf || foot -e yazi"))
+hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("thunar"))
 
--- Add a new binding.
--- o.bind("SUPER + SHIFT + R", "SSH", "alacritty -e ssh your-server")
+-- 3. Лаунчер додатків та Буфер обміну (Vicinae як головний)
+hl.bind(mod .. " + Space", hl.dsp.exec_cmd("vicinae open"))
+hl.bind(mod .. " + D", hl.dsp.exec_cmd("vicinae open"))
+hl.bind(mod .. " + SHIFT + V", hl.dsp.exec_cmd("vicinae open --extension clipboard"))
+-- Запасний виклик меню Noctalia
+hl.bind(mod .. " + ALT + Space", hl.dsp.exec_cmd("noctalia toggle-launcher || noctalia"))
 
--- Change an existing binding by unbinding it first, then binding the key again.
--- This example changes SUPER+SPACE from the launcher to the Omarchy root menu.
--- hl.unbind("SUPER + SPACE")
--- o.bind("SUPER + SPACE", "Omarchy menu", "omarchy-menu toggle root")
+-- 4. Керування вікнами
+hl.bind(mod .. " + SHIFT + Q", hl.dsp.window.close())
+hl.bind(mod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mod .. " + T", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
+hl.bind(mod .. " + P", hl.dsp.window.pseudo())
+hl.bind(mod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 
--- Disable a default binding without replacing it.
--- hl.unbind("SUPER + SHIFT + B")
+-- 5. Групування вікон (Tabs / Groups)
+hl.bind(mod .. " + W", hl.dsp.group.toggle())
+hl.bind("ALT + TAB", hl.dsp.group.next())
+hl.bind(mod .. " + SHIFT + W", hl.dsp.group.lock())
 
--- 1. Мультиплексор Zellij замість tmux на SUPER + ALT + RETURN
-hl.unbind("SUPER + ALT + RETURN")
-o.bind("SUPER + ALT + RETURN", "Zellij", "omarchy-launch-terminal -e zellij")
+-- 6. Scratchpad (Спеціальний робочий стіл)
+hl.bind(mod .. " + S", hl.dsp.workspace.toggle_special("magic"))
+hl.bind(mod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
--- 2. Швидкий запуск TUI файлового менеджера Yazi на SUPER + E
-o.bind("SUPER + E", "Yazi File Manager", "omarchy-launch-terminal -e yazi")
+-- 7. Фокус вікон (Стрілки)
+hl.bind(mod .. " + left",  hl.dsp.focus({ direction = "left" }))
+hl.bind(mod .. " + right", hl.dsp.focus({ direction = "right" }))
+hl.bind(mod .. " + up",    hl.dsp.focus({ direction = "up" }))
+hl.bind(mod .. " + down",  hl.dsp.focus({ direction = "down" }))
 
--- 3. Переміщення вікна у спеціальний воркспейс (Scratchpad) на SUPER + SHIFT + S
-o.bind("SUPER + SHIFT + S", "Move to scratchpad", hl.dsp.window.move({ workspace = "special:scratchpad", follow = false }))
+-- 8. Перемикання робочих столів 1-10
+for i = 1, 10 do
+  local key = i % 10
+  hl.bind(mod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+  hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+end
 
--- Logitech MX Keys examples:
--- o.bind("SUPER + SHIFT + S", nil, "omarchy-capture-screenshot")
--- o.bind("SUPER + H", nil, "voxtype record toggle")
--- o.bind("SUPER + PERIOD", nil, "omarchy-shell shell toggle omarchy.emojis")
+-- Перемикання робочих столів колесом миші
+hl.bind(mod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(mod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+
+-- 9. Перетягування та зміна розміру вікон мишею
+hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+-- 10. Мультимедійні клавіші та гучність (WirePlumber / wpctl)
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true, repeating = true })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true, repeating = true })
+
+-- Підсвічування дисплея
+hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
+
+-- Керування медіаплеєром (playerctl)
+hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
+
+-- 11. Скріншоти (Hyprshot або Grim + Slurp)
+hl.bind("Print", hl.dsp.exec_cmd("command -v hyprshot >/dev/null 2>&1 && hyprshot -m region -o ~/Pictures/Screenshots/ || (grim -g \"$(slurp)\" - | wl-copy && notify-send 'Скріншот скопійовано')"))

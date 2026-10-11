@@ -1,78 +1,50 @@
--- Keep only your personal input overrides here. Uncommented settings below
--- replace Omarchy's defaults.
+-- ==============================================================================
+-- Hyprland Input Configuration
+-- ==============================================================================
 
--- Keyboard layout and options.
--- See https://wiki.hypr.land/Configuring/Basics/Variables/#input
 hl.config({
   input = {
+    -- Розкладка клавіатури: US та UA, перемикання через Caps Lock
     kb_layout = "us,ua",
-    kb_options = "grp:caps_toggle,shift:both_capslock_cancel",
+    kb_options = "grp:caps_toggle",
 
-    -- Знижуємо чутливість миші (-1.0 до 1.0, дефолт 0)
+    -- Чутливість миші (-1.0 до 1.0, 0 - стандарт). -0.3 для точного контролю
     sensitivity = -0.3,
 
-    -- Вимикаємо апаратне прискорення (flat), щоб рух курсора був плавним і передбачуваним
+    -- Лінійний профіль курсора без стрибків акселерації
     accel_profile = "flat",
 
+    follow_mouse = 1,
+    repeat_rate = 40,
+    repeat_delay = 250,
+    numlock_by_default = true,
+
     touchpad = {
-      -- Інвертована (природна) прокрутка
+      -- Природна прокрутка
       natural_scroll = true,
 
-      -- Клік двома пальцями як права кнопка миші
+      -- Правий клік двома пальцями
       clickfinger_behavior = true,
 
-      -- Швидкість скролу тачпада
-      scroll_factor = 0.45,
+      -- Комфортна швидкість прокрутки
+      scroll_factor = 0.5,
 
-      -- Можливість перетягування тапом
+      -- Перетягування тапом
       tap_and_drag = true,
     },
   },
 })
 
--- Жест 3 пальцями для швидкого перемикання робочих столів
-hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
---
---     -- Change speed of keyboard repeat.
---     repeat_rate = 40,
---     repeat_delay = 250,
---
---     -- Start with numlock on by default.
---     numlock_by_default = true,
---
---     -- Increase sensitivity for mouse/trackpad (default: 0).
---     sensitivity = 0.35,
---
---     -- Turn off mouse acceleration (default: adaptive).
---     accel_profile = "flat",
---
---     touchpad = {
---       -- Use natural (inverse) scrolling.
---       natural_scroll = true,
---
---       -- Use two-finger clicks for right-click instead of lower-right corner.
---       clickfinger_behavior = true,
---
---       -- Control the speed of your scrolling.
---       scroll_factor = 0.4,
---
---       -- Enable the touchpad while typing.
---       disable_while_typing = false,
---
---       -- Left-click-and-drag with three fingers.
---       drag_3fg = 1,
---     },
---   },
--- })
+-- Жест 3 пальцями для перемикання робочих столів
+hl.gesture({
+  fingers = 3,
+  direction = "horizontal",
+  action = "workspace",
+})
 
--- App-specific touchpad scroll speeds.
--- o.window("(Alacritty|kitty|foot)", { scroll_touchpad = 1.5 })
--- o.window("com.mitchellh.ghostty", { scroll_touchpad = 0.2 })
-
--- Enable touchpad gestures for changing workspaces.
--- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Gestures/
--- hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
-
--- Enable touchpad gestures for moving focus (helpful on scrolling layout).
--- hl.gesture({ fingers = 3, direction = "left", action = function() hl.dispatch(hl.dsp.focus({ direction = "l" })) end })
--- hl.gesture({ fingers = 3, direction = "right", action = function() hl.dispatch(hl.dsp.focus({ direction = "r" })) end })
+-- Специфічне калібрування для тачпада ноутбука
+hl.device({
+  name = "elan0515:00-04f3:3142-touchpad",
+  natural_scroll = true,
+  sensitivity = -0.3,
+})
