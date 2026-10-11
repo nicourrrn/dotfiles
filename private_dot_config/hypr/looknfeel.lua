@@ -50,6 +50,16 @@ hl.config({
   misc = {
     disable_hyprland_logo = true,
     animate_manual_resizes = false, -- Миттєва зміна розміру вікон мишею без затримок
+    focus_on_activate = true,
+  },
+
+  render = {
+    direct_scanout = true, -- Прямий скан-аут для ігор та повноекранних додатків
+  },
+
+  cursor = {
+    no_warps = true,
+    inactive_timeout = 5, -- Ховати курсор через 5 секунд неактивності
   },
 
   dwindle = {
