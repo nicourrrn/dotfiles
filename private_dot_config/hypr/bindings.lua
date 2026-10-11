@@ -14,7 +14,6 @@ hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("thunar"))
 
 -- 3. Лаунчер додатків та Буфер обміну (Vicinae як головний)
 hl.bind(mod .. " + Space", hl.dsp.exec_cmd("vicinae open"))
-hl.bind(mod .. " + D", hl.dsp.exec_cmd("vicinae open"))
 hl.bind(mod .. " + SHIFT + V", hl.dsp.exec_cmd("vicinae open --extension clipboard"))
 -- Запасний виклик меню Noctalia
 hl.bind(mod .. " + ALT + Space", hl.dsp.exec_cmd("noctalia toggle-launcher || noctalia"))
@@ -73,5 +72,7 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
--- 11. Скріншоти (Hyprshot або Grim + Slurp)
-hl.bind("Print", hl.dsp.exec_cmd("command -v hyprshot >/dev/null 2>&1 && hyprshot -m region -o ~/Pictures/Screenshots/ || (grim -g \"$(slurp)\" - | wl-copy && notify-send 'Скріншот скопійовано')"))
+-- 11. Скріншоти (Hyprshot)
+hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m region -o ~/Pictures/Screenshots/"))
+hl.bind("SHIFT + Print", hl.dsp.exec_cmd("hyprshot -m window -o ~/Pictures/Screenshots/"))
+
