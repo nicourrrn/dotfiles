@@ -16,10 +16,9 @@ hl.bind(mod .. " + ALT + Return", hl.dsp.exec_cmd("kitty -e zellij || foot -e ze
 hl.bind(mod .. " + E",         hl.dsp.exec_cmd("kitty -e spf || foot -e yazi"))
 hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("thunar"))
 
--- Лаунчер додатків та Буфер обміну (Vicinae Spotlight-style)
-hl.bind(mod .. " + Space",     hl.dsp.exec_cmd("vicinae open"))
-hl.bind(mod .. " + D",         hl.dsp.exec_cmd("vicinae open"))
-hl.bind(mod .. " + SHIFT + V", hl.dsp.exec_cmd("vicinae open --extension clipboard"))
+-- Лаунчер додатків та Буфер обміну (Vicinae Spotlight-style з підтримкою toggle)
+hl.bind(mod .. " + Space",     hl.dsp.exec_cmd("vicinae toggle"))
+hl.bind(mod .. " + SHIFT + V", hl.dsp.exec_cmd("vicinae toggle --extension clipboard || vicinae open --extension clipboard"))
 -- Запасне відкриття лаунчера Noctalia
 hl.bind(mod .. " + ALT + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
 
