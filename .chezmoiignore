@@ -1,0 +1,6 @@
+# Стан програм, а не конфіг: змінюється при кожному запуску
+.config/fish/fish_variables
+
+# Робочі ключі не зберігаються в dotfiles
+.ssh/mobius_gitlab*
+.ssh/vsorokinmarketing*

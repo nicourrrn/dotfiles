@@ -18,7 +18,6 @@ hl.config({
     },
 
     resize_on_border = true,
-    layout = "dwindle",
   },
 
   decoration = {
@@ -60,10 +59,6 @@ hl.config({
   cursor = {
     no_warps = true,
     inactive_timeout = 5, -- Ховати курсор через 5 секунд неактивності
-  },
-
-  dwindle = {
-    preserve_split = true,
   },
 })
 

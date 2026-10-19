@@ -13,7 +13,8 @@ hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("EDITOR", "zeditor")
 hl.env("TERMINAL", "kitty")
-hl.env("SSH_AUTH_SOCK", "$XDG_RUNTIME_DIR/ssh-agent.socket")
+-- Lua не розкриває $VAR у рядках: беремо шлях явно
+hl.env("SSH_AUTH_SOCK", (os.getenv("XDG_RUNTIME_DIR") or "/run/user/1000") .. "/ssh-agent.socket")
 
 -- Wayland & XDG стандарти для тулкітів
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")

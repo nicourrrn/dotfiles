@@ -1,0 +1,90 @@
+-- ==============================================================================
+-- Hyprland Scrolling Layout (niri-style tape of columns): налаштування та хоткеї
+-- Docs: https://wiki.hypr.land/Configuring/Layouts/Scrolling-Layout/
+-- ==============================================================================
+
+local bind = require("bindings").bind
+local mod = "SUPER"
+
+-- Браузери та «важкі» програми відкриваються на всю ширину, решта — половина екрана
+local wide_apps = "(?i)^(zen(-browser)?|thorium.*|chromium.*|firefox|blender|godot|zed|dev\\.zed\\.Zed)$"
+
+hl.config({
+  general = { layout = "scrolling" },
+
+  scrolling = {
+    fullscreen_on_one_column = false,             -- як у niri: одна колонка не розтягується
+    column_width             = 0.5,
+    explicit_column_widths   = "0.333, 0.5, 0.667, 1.0", -- пресети для Super+R
+    focus_fit_method         = 1,                 -- 0 = центрувати, 1 = мінімально доскролити
+    follow_focus             = true,
+    follow_min_visible       = 0.4,
+    wrap_focus               = false,             -- без «перескоку» з кінця стрічки на початок
+    wrap_swapcol             = false,
+    direction                = "right",
+  },
+
+  gestures = {
+    scrolling = {
+      move_snap_to_grid = true,                   -- свайп «доклацує» до межі колонки
+    },
+  },
+})
+
+hl.window_rule({ name = "scrolling-wide-apps", match = { class = wide_apps }, scrolling_width = 1.0 })
+
+-- Жести: 3 пальці горизонтально гортають стрічку, вертикально — робочі столи
+hl.gesture({ fingers = 3, direction = "horizontal", action = "scroll_move" })
+hl.gesture({ fingers = 3, direction = "vertical",   action = "workspace" })
+
+-- ------------------------------------------------------------------------------
+-- Навігація (максимально близько до дефолтів niri)
+-- ------------------------------------------------------------------------------
+local directions = {
+  h = "l", left = "l",
+  l = "r", right = "r",
+  j = "d", down = "d",
+  k = "u", up = "u",
+}
+local names = { l = "left", r = "right", u = "up", d = "down" }
+
+for key, d in pairs(directions) do
+  -- H/L — сусідня колонка, J/K — вікно в межах колонки
+  bind(mod .. " + " .. key, hl.dsp.layout("focus " .. d), "Scrolling: Focus " .. names[d], { repeating = true })
+
+  if d == "l" or d == "r" then
+    bind(mod .. " + SHIFT + " .. key, hl.dsp.layout("swapcol " .. d),
+      "Scrolling: Move column " .. names[d], { repeating = true })
+    bind(mod .. " + ALT + " .. key, hl.dsp.layout("colresize " .. (d == "l" and "-0.05" or "+0.05")),
+      "Scrolling: " .. (d == "l" and "Narrow" or "Widen") .. " column", { repeating = true })
+  else
+    bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ direction = names[d] }),
+      "Scrolling: Move window " .. names[d] .. " in column")
+  end
+end
+
+-- Super+Shift+колесо — вікна по горизонталі (Super+колесо — робочі столи, див. bindings.lua)
+bind(mod .. " + SHIFT + mouse_down", hl.dsp.layout("focus r"), "Scrolling: Next column (wheel)")
+bind(mod .. " + SHIFT + mouse_up",   hl.dsp.layout("focus l"), "Scrolling: Previous column (wheel)")
+
+-- ------------------------------------------------------------------------------
+-- Колонки
+-- ------------------------------------------------------------------------------
+-- Вікно в сусідню колонку або в окрему (niri: consume-or-expel-window-left/right)
+bind(mod .. " + bracketleft",  hl.dsp.layout("consume_or_expel prev"), "Scrolling: Consume/expel window left")
+bind(mod .. " + bracketright", hl.dsp.layout("consume_or_expel next"), "Scrolling: Consume/expel window right")
+
+-- Ширина: пресети (niri: switch-preset-column-width)
+bind(mod .. " + R",         hl.dsp.layout("colresize +conf"), "Scrolling: Next width preset")
+bind(mod .. " + SHIFT + R", hl.dsp.layout("colresize -conf"), "Scrolling: Previous width preset")
+
+-- Колонка на всю ширину і назад (niri: maximize-column)
+bind(mod .. " + CTRL + F", function()
+  local window = hl.get_active_window()
+  local column = window and not window.floating and window.layout and window.layout.column
+  if not column then return end
+  hl.dispatch(hl.dsp.layout("colresize " .. (column.width >= 0.99 and "0.5" or "1.0")))
+end, "Scrolling: Maximize column")
+
+-- Повністю показати активну колонку (niri: center-column)
+bind(mod .. " + CTRL + C", hl.dsp.layout("fit_into_view"), "Scrolling: Fit column into view")

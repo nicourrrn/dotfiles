@@ -35,13 +35,6 @@ hl.config({
   },
 })
 
--- Жест 3 пальцями для перемикання робочих столів
-hl.gesture({
-  fingers = 3,
-  direction = "horizontal",
-  action = "workspace",
-})
-
 -- Специфічне калібрування для тачпада ноутбука
 hl.device({
   name = "elan0515:00-04f3:3142-touchpad",

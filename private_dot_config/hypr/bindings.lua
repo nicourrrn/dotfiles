@@ -1,139 +1,106 @@
 -- ==============================================================================
--- Hyprland Keybindings (Vicinae + Kitty / Foot + Noctalia Native IPC)
--- Philosophy: Ergonomic Hybrid (Vim Home-Row + macOS / Raycast + i3 Tiling)
+-- Hyprland Keybindings (спільні для всіх розкладок)
+-- Philosophy: Vim home-row + macOS / Omarchy. Кожна дія — одне сполучення.
+-- Бінди, специфічні для розкладки, живуть у scrolling.lua / dwindle.lua.
+-- Перелік з описами: `hyprctl binds`
 -- ==============================================================================
 
 local mod = "SUPER"
 
--- ------------------------------------------------------------------------------
--- 1. Додатки та Емулятори термінала
--- ------------------------------------------------------------------------------
--- Розумний запуск термінала в CWD активного вікна (Kitty основний, Foot як fallback)
-hl.bind(mod .. " + Return",       hl.dsp.exec_cmd("terminal-cwd"))
-hl.bind(mod .. " + ALT + Return", hl.dsp.exec_cmd("kitty -e zellij || foot -e zellij"))
-
--- Файлові менеджери (TUI Superfile / Yazi та повноцінний GUI Thunar)
-hl.bind(mod .. " + E",         hl.dsp.exec_cmd("kitty -e spf || foot -e yazi"))
-hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("thunar"))
-
--- Лаунчер додатків та Буфер обміну (Vicinae Spotlight-style з підтримкою toggle)
-hl.bind(mod .. " + Space",     hl.dsp.exec_cmd("vicinae toggle"))
-hl.bind(mod .. " + SHIFT + V", hl.dsp.exec_cmd("vicinae toggle --extension clipboard || vicinae open --extension clipboard"))
--- Запасне відкриття лаунчера Noctalia
-hl.bind(mod .. " + ALT + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
-
--- ------------------------------------------------------------------------------
--- 2. Життєвий цикл та стан вікна
--- ------------------------------------------------------------------------------
--- Закриття вікна (одноручне зручне Super+Q та сумісне Super+Shift+Q)
-hl.bind(mod .. " + Q",         hl.dsp.window.close())
-hl.bind(mod .. " + SHIFT + Q", hl.dsp.window.close())
-
--- Режими відображення вікна
-hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
-hl.bind(mod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mod .. " + T", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mod .. " + P", hl.dsp.window.pseudo())
-
--- Зміна орієнтації спліту Dwindle (горизонтальний / вертикальний поділ)
-hl.bind(mod .. " + backslash", hl.dsp.layout("togglesplit"))
-hl.bind(mod .. " + B",         hl.dsp.layout("togglesplit"))
-
--- ------------------------------------------------------------------------------
--- 3. Навігація, Переміщення та Зміна розмірів вікон (Vim HJKL + Стрілки)
--- ------------------------------------------------------------------------------
-local directions = {
-  h     = { dir = "left",  arg = "l", rx = "-30 0" },
-  left  = { dir = "left",  arg = "l", rx = "-30 0" },
-  l     = { dir = "right", arg = "r", rx = "30 0"  },
-  right = { dir = "right", arg = "r", rx = "30 0"  },
-  k     = { dir = "up",    arg = "u", rx = "0 -30" },
-  up    = { dir = "up",    arg = "u", rx = "0 -30" },
-  j     = { dir = "down",  arg = "d", rx = "0 30"  },
-  down  = { dir = "down",  arg = "d", rx = "0 30"  },
-}
-
-for key, d in pairs(directions) do
-  -- Фокус вікна (Vim-рухи без відриву рук від клавіатури)
-  hl.bind(mod .. " + " .. key, hl.dsp.focus({ direction = d.dir }))
-
-  -- Зсув / перестановка вікна в тайлі (Shift + HJKL / Стрілки)
-  hl.bind(mod .. " + SHIFT + " .. key, function() hl.dispatch("movewindow", d.arg) end)
-
-  -- Точна зміна розміру вікна з клавіатури (Alt + HJKL / Стрілки, крок 30px)
-  hl.bind(mod .. " + ALT + " .. key, function() hl.dispatch("resizeactive", d.rx) end)
+local function bind(key, action, description, opts)
+  local options = { description = description }
+  for k, v in pairs(opts or {}) do options[k] = v end
+  hl.bind(key, action, options)
 end
 
--- Перетягування та ресайз мишею
-hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
-hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+local noctalia = function(cmd) return hl.dsp.exec_cmd("noctalia msg " .. cmd) end
 
 -- ------------------------------------------------------------------------------
--- 4. Групування вікон та вкладки (Tabs / Groups)
+-- 1. Програми
 -- ------------------------------------------------------------------------------
-hl.bind(mod .. " + G",         hl.dsp.group.toggle())
-hl.bind(mod .. " + W",         hl.dsp.group.toggle())
-hl.bind("ALT + TAB",           hl.dsp.group.next())
-hl.bind(mod .. " + TAB",       hl.dsp.group.next())
-hl.bind(mod .. " + SHIFT + G", hl.dsp.group.lock())
+bind(mod .. " + Return",       hl.dsp.exec_cmd("terminal-cwd"),                 "Apps: Terminal in active window's directory")
+bind(mod .. " + ALT + Return", hl.dsp.exec_cmd("kitty -e zellij || foot -e zellij"), "Apps: Terminal with Zellij")
+bind(mod .. " + E",            hl.dsp.exec_cmd("kitty -e spf || foot -e yazi"), "Apps: TUI file manager")
+bind(mod .. " + SHIFT + E",    hl.dsp.exec_cmd("thunar"),                       "Apps: GUI file manager")
+bind(mod .. " + SHIFT + P",    hl.dsp.exec_cmd("keepassxc"),                    "Apps: KeePassXC")
+
+-- Лаунчер і буфер обміну (Spotlight / Windows-style)
+bind(mod .. " + Space",       hl.dsp.exec_cmd("vicinae toggle"),                     "Launcher: Vicinae")
+bind(mod .. " + ALT + Space", noctalia("panel-toggle launcher"),                     "Launcher: Noctalia")
+bind(mod .. " + V",           hl.dsp.exec_cmd("vicinae toggle --extension clipboard || vicinae open --extension clipboard"), "Launcher: Clipboard history")
 
 -- ------------------------------------------------------------------------------
--- 5. Робочі столи (Workspaces) та Scratchpad
+-- 2. Стан вікна
 -- ------------------------------------------------------------------------------
--- Миттєве повернення на попередній робочий стіл (Back-and-forth через `~`)
-hl.bind(mod .. " + grave", function() hl.dispatch("workspace", "previous") end)
+bind(mod .. " + Q",         hl.dsp.window.close(),                         "Window: Close")
+bind(mod .. " + F",         hl.dsp.window.fullscreen({ action = "toggle" }), "Window: Fullscreen")
+bind(mod .. " + T",         hl.dsp.window.float({ action = "toggle" }),    "Window: Toggle floating")
+bind(mod .. " + SHIFT + T", hl.dsp.window.pin(),                           "Window: Pin floating window on all workspaces")
 
--- Перемикання на столи 1-10 та перенесення вікон
+-- Перебір вікон (як Cmd+Tab / Omarchy)
+bind("ALT + Tab",         hl.dsp.window.cycle_next(),                "Window: Next", { repeating = true })
+bind("ALT + SHIFT + Tab", hl.dsp.window.cycle_next({ next = false }), "Window: Previous", { repeating = true })
+
+-- Миша: перетягування та ресайз
+bind(mod .. " + mouse:272", hl.dsp.window.drag(),   "Window: Drag",   { mouse = true })
+bind(mod .. " + mouse:273", hl.dsp.window.resize(), "Window: Resize", { mouse = true })
+
+-- ------------------------------------------------------------------------------
+-- 3. Групи (вкладки)
+-- ------------------------------------------------------------------------------
+bind(mod .. " + G",         hl.dsp.group.toggle(), "Group: Toggle")
+bind(mod .. " + SHIFT + G", hl.dsp.group.lock(),   "Group: Lock")
+bind(mod .. " + Tab",       hl.dsp.group.next(),   "Group: Next tab", { repeating = true })
+bind(mod .. " + SHIFT + Tab", hl.dsp.group.prev(), "Group: Previous tab", { repeating = true })
+
+-- ------------------------------------------------------------------------------
+-- 4. Робочі столи та Scratchpad
+-- ------------------------------------------------------------------------------
 for i = 1, 10 do
   local key = i % 10
-  hl.bind(mod .. " + " .. key,         hl.dsp.focus({ workspace = i }))
-  hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+  bind(mod .. " + " .. key,         hl.dsp.focus({ workspace = i }),       "Workspace: Go to " .. i)
+  bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }), "Workspace: Move window to " .. i)
 end
 
--- Спеціальний робочий стіл (Scratchpad)
-hl.bind(mod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+bind(mod .. " + grave", function() hl.dispatch("workspace", "previous") end, "Workspace: Back and forth")
 
--- Колесо миші для перемикання робочих столів
-hl.bind(mod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(mod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+bind(mod .. " + S",         hl.dsp.workspace.toggle_special("magic"),            "Scratchpad: Toggle")
+bind(mod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }), "Scratchpad: Move window")
 
--- ------------------------------------------------------------------------------
--- 6. Панелі, Меню та Системні тригери Noctalia
--- ------------------------------------------------------------------------------
--- Системне меню сесії (Lock, Logout, Reboot, Shutdown)
-hl.bind(mod .. " + M",         hl.dsp.exec_cmd("noctalia msg panel-toggle session-menu"))
--- Центр керування та швидких налаштувань
-hl.bind(mod .. " + N",         hl.dsp.exec_cmd("noctalia msg panel-toggle control-center"))
--- Історія сповіщень
-hl.bind(mod .. " + SHIFT + N", hl.dsp.exec_cmd("noctalia msg panel-toggle notification-history"))
-
--- Швидкі тригери
-hl.bind(mod .. " + C", hl.dsp.exec_cmd("noctalia msg caffeine-toggle"))
-hl.bind(mod .. " + X", hl.dsp.exec_cmd("noctalia msg nightlight-toggle"))
+-- Колесо: Super — робочі столи (Super+Shift — вікна, див. файл розкладки)
+bind(mod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }), "Workspace: Next (wheel)")
+bind(mod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }), "Workspace: Previous (wheel)")
 
 -- ------------------------------------------------------------------------------
--- 7. Мультимедіа, Гучність та Яскравість (Noctalia OSD)
+-- 5. Сесія та панелі Noctalia
 -- ------------------------------------------------------------------------------
--- Гучність та мікрофон
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("noctalia msg volume-up 5"),   { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("noctalia msg volume-down 5"), { locked = true, repeating = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("noctalia msg volume-mute"),   { locked = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("noctalia msg mic-mute"),      { locked = true })
-
--- Підсвічування дисплея
-hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("noctalia msg brightness-up current 5"),   { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("noctalia msg brightness-down current 5"), { locked = true, repeating = true })
-
--- Керування медіаплеєром
-hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("noctalia msg media next"),       { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd("noctalia msg media play-pause"), { locked = true })
-hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("noctalia msg media play-pause"), { locked = true })
-hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("noctalia msg media previous"),   { locked = true })
+bind(mod .. " + Escape",     noctalia("panel-toggle session-menu"), "Session: Menu (lock, logout, reboot…)")
+bind(mod .. " + CTRL + Q",   noctalia("session lock"),              "Session: Lock (macOS Ctrl+Cmd+Q)")
+bind(mod .. " + N",          noctalia("panel-toggle control-center"),       "Panel: Control center")
+bind(mod .. " + SHIFT + N",  noctalia("panel-toggle notification-history"), "Panel: Notifications")
+bind(mod .. " + C",          noctalia("caffeine-toggle"),   "Toggle: Caffeine (no idle)")
+bind(mod .. " + X",          noctalia("nightlight-toggle"), "Toggle: Night light")
 
 -- ------------------------------------------------------------------------------
--- 8. Скріншоти (Noctalia)
+-- 6. Медіа, гучність, яскравість (працюють і на екрані блокування)
 -- ------------------------------------------------------------------------------
-hl.bind("Print",         hl.dsp.exec_cmd("noctalia msg screenshot-region"))
-hl.bind("SHIFT + Print", hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen"))
-hl.bind("SUPER + Print", hl.dsp.exec_cmd("noctalia msg screenshot-annotate"))
+local locked_rep = { locked = true, repeating = true }
+bind("XF86AudioRaiseVolume",  noctalia("volume-up 5"),   "Media: Volume up", locked_rep)
+bind("XF86AudioLowerVolume",  noctalia("volume-down 5"), "Media: Volume down", locked_rep)
+bind("XF86AudioMute",         noctalia("volume-mute"),   "Media: Mute", { locked = true })
+bind("XF86AudioMicMute",      noctalia("mic-mute"),      "Media: Mute microphone", { locked = true })
+bind("XF86MonBrightnessUp",   noctalia("brightness-up current 5"),   "Media: Brightness up", locked_rep)
+bind("XF86MonBrightnessDown", noctalia("brightness-down current 5"), "Media: Brightness down", locked_rep)
+bind("XF86AudioNext",  noctalia("media next"),       "Media: Next track", { locked = true })
+bind("XF86AudioPrev",  noctalia("media previous"),   "Media: Previous track", { locked = true })
+bind("XF86AudioPlay",  noctalia("media play-pause"), "Media: Play / pause", { locked = true })
+bind("XF86AudioPause", noctalia("media play-pause"), "Media: Play / pause", { locked = true })
+
+-- ------------------------------------------------------------------------------
+-- 7. Скріншоти
+-- ------------------------------------------------------------------------------
+bind("Print",           noctalia("screenshot-region"),     "Screenshot: Region")
+bind("SHIFT + Print",   noctalia("screenshot-fullscreen"), "Screenshot: Monitor")
+bind(mod .. " + Print", noctalia("screenshot-annotate"),   "Screenshot: Annotate")
+
+return { bind = bind }

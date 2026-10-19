@@ -12,6 +12,11 @@ alias home="ssh nicourrrn@ssh.home"
 if status is-interactive
     set -g fish_greeting ""
 
+    # Auto-start Zellij by default
+    if not set -q ZELLIJ; and test "$TERM" != "dumb"; and not set -q NVIM; and test "$TERM_PROGRAM" != "vscode"; and not set -q NO_ZELLIJ
+        exec zellij
+    end
+
     starship init fish | source
     zoxide init fish | source
     mise activate fish | source

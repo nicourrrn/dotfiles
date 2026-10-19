@@ -1,16 +1,93 @@
+// This configuration is merged with the default vicinae configuration file, which you can obtain by running the `vicinae config default` command.
+// Every item defined in this file takes precedence over the values defined in the default config or any other imported file.
+//
+// You can make manual edits to this file, however you should keep in mind that this file may be written to by vicinae when a configuration change is made through the GUI.
+// When that happens, any custom comments or formatting will be lost.
+//
+// If you want to maintain a configuration file with your own comments and formatting, you should create a separate file and add it to the 'imports' array.
+//
+// Learn more about configuration at https://docs.vicinae.com/config
+
 {
    "$schema": "https://vicinae.com/schemas/config.json",
+   "global_shortcuts": {
+      "toggle": ""
+   },
    "theme": {
       "dark": {
          "name": "gruvbox-dark"
       }
    },
-   "global_shortcuts": {
-      "toggle": null
-   },
    "favorites": [
       "applications:zen",
       "applications:dev.zed.Zed",
       "clipboard:history"
-   ]
+   ],
+   "providers": {
+      "@EvanZhouDev/store.raycast.raycast-gemini": {
+         "enabled": false
+      },
+      "@Keyruu/store.raycast.zen-browser": {
+         "preferences": {
+            "aiSearchHistoryLimitResults": "50",
+            "limitResults": "50",
+            "newTabShortcut": "command t",
+            "profileDirectorySuffix": "Default (alpha)",
+            "searchEngine": "Default"
+         }
+      },
+      "@Melvynx/store.raycast.qrcode-generator": {
+         "preferences": {
+            "defaultColor": "#000000"
+         }
+      },
+      "@rolandleth/store.raycast.kill-process": {
+         "preferences": {
+            "clearSearchBarAfterKill": true,
+            "closeWindowAfterKill": true,
+            "goToRootAfterKill": false,
+            "refreshDuration": "3000",
+            "shouldPrioritizeAppsWhenFiltering": false,
+            "shouldSearchInPaths": false,
+            "shouldSearchInPid": false,
+            "shouldShowPID": false,
+            "shouldShowPath": false,
+            "skipConfirmation": false
+         }
+      },
+      "@thomaslombart/store.raycast.github": {
+         "preferences": {
+            "defaultSearchTerms": "author:@me",
+            "includeTeamReviewRequests": true,
+            "isOpenInBrowser": false,
+            "repositoryCloneProtocol": "https",
+            "repositoryFilterMode": "all",
+            "vscodeBuild": "vscode"
+         }
+      },
+      "@vimtor/store.raycast.video-downloader": {
+         "preferences": {
+            "autoLoadUrlFromClipboard": false,
+            "autoLoadUrlFromSelectedText": false,
+            "cookiesFromBrowser": "none",
+            "downloadPath": "~/Downloads",
+            "enableBrowserExtensionSupport": false,
+            "fastRemux": true,
+            "forceIpv4": false,
+            "homebrewPath": "/opt/homebrew/bin/brew"
+         }
+      },
+      "developer": {
+         "enabled": false
+      },
+      "snippets": {
+         "preferences": {
+            "enabled": true,
+            "keyDelay": "2",
+            "layout": "",
+            "prePasteDelay": "0",
+            "undo": true
+         }
+      }
+   }
 }
