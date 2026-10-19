@@ -20,8 +20,7 @@ local noctalia = function(cmd) return hl.dsp.exec_cmd("noctalia msg " .. cmd) en
 -- ------------------------------------------------------------------------------
 bind(mod .. " + Return",       hl.dsp.exec_cmd("terminal-cwd"),                 "Apps: Terminal in active window's directory")
 bind(mod .. " + ALT + Return", hl.dsp.exec_cmd("kitty -e zellij || foot -e zellij"), "Apps: Terminal with Zellij")
-bind(mod .. " + E",            hl.dsp.exec_cmd("kitty -e spf || foot -e yazi"), "Apps: TUI file manager")
-bind(mod .. " + SHIFT + E",    hl.dsp.exec_cmd("thunar"),                       "Apps: GUI file manager")
+bind(mod .. " + E",            hl.dsp.exec_cmd("thunar"),                       "Apps: File manager")
 bind(mod .. " + SHIFT + P",    hl.dsp.exec_cmd("keepassxc"),                    "Apps: KeePassXC")
 
 -- Лаунчер і буфер обміну (Spotlight / Windows-style)
