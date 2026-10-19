@@ -1,0 +1,78 @@
+/* ==============================================================================
+   GTK3: палітра теми + мінімалістичний Thunar
+   colors.css генерує `theme-set` (arch-custom-os/configs/themes/<тема>/gtk-colors.css)
+   ============================================================================== */
+
+@import url("colors.css");
+
+/* ------------------------------------------------------------------------------
+   Thunar
+   Thunar не задає власних CSS-імен вузлів, тож селектори на кшталт ThunarWindow
+   нічого не знаходять. Працює клас вікна `window.thunar` (перевірено знімками).
+   ------------------------------------------------------------------------------ */
+
+/* Тулбар зливається з вікном: без фону, рамок і тіней */
+window.thunar toolbar {
+  background-color: @window_bg_color;
+  border-bottom: 1px solid alpha(@window_fg_color, 0.06);
+  padding: 4px 8px;
+}
+
+window.thunar toolbar button {
+  border: none;
+  box-shadow: none;
+  background: none;
+  border-radius: 8px;
+  min-height: 28px;
+  min-width: 28px;
+}
+
+window.thunar toolbar button:hover {
+  background-color: alpha(@window_fg_color, 0.08);
+}
+
+window.thunar toolbar button:active,
+window.thunar toolbar button:checked {
+  background-color: alpha(@window_fg_color, 0.14);
+}
+
+/* Рядок шляху — плаский, без рамки; акцентна обводка лише у фокусі */
+window.thunar toolbar entry {
+  border: none;
+  box-shadow: none;
+  border-radius: 8px;
+  min-height: 30px;
+  background-color: alpha(@window_fg_color, 0.05);
+}
+
+window.thunar toolbar entry:focus {
+  box-shadow: inset 0 0 0 1px alpha(@accent_color, 0.6);
+}
+
+/* Бічна панель — темніша смуга (sidebar_bg_color), без розділювачів */
+window.thunar .sidebar {
+  border: none;
+}
+
+window.thunar paned > separator {
+  min-width: 1px;
+  background: alpha(@window_fg_color, 0.06);
+}
+
+/* Заголовки колонок — приглушений текст без кнопкового вигляду */
+window.thunar treeview.view header button {
+  border: none;
+  box-shadow: none;
+  background: none;
+  color: alpha(@view_fg_color, 0.55);
+}
+
+window.thunar treeview.view header button:hover {
+  color: @view_fg_color;
+}
+
+/* Без рамок навколо списку файлів */
+window.thunar scrolledwindow,
+window.thunar frame > border {
+  border: none;
+}
