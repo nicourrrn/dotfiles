@@ -13,7 +13,7 @@ hl.config({
   general = { layout = "scrolling" },
 
   scrolling = {
-    fullscreen_on_one_column = false,             -- як у niri: одна колонка не розтягується
+    fullscreen_on_one_column = true,              -- одна колонка на столі — на весь екран; з другою повертаються звичайні ширини
     column_width             = 0.5,
     explicit_column_widths   = "0.333, 0.5, 0.667, 1.0", -- пресети для Super+R
     focus_fit_method         = 1,                 -- 0 = центрувати, 1 = мінімально доскролити
