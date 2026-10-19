@@ -6,7 +6,7 @@
   <property name="last-window-maximized" type="bool" value="true"/>
   <property name="last-separator-position" type="int" value="180"/>
   <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
-  <property name="last-details-view-column-widths" type="string" value="50,50,112,50,90,498,50,50,564,50,50,85,50,157"/>
+  <property name="last-details-view-column-widths" type="string" value="50,50,112,50,90,498,50,50,154,50,50,74,50,157"/>
   <property name="last-sort-column" type="string" value="THUNAR_COLUMN_NAME"/>
   <property name="last-sort-order" type="string" value="GTK_SORT_DESCENDING"/>
   <property name="misc-single-click" type="bool" value="false"/>
@@ -19,7 +19,6 @@
   <property name="misc-symbolic-icons-in-toolbar" type="bool" value="false"/>
   <property name="last-side-pane" type="string" value="THUNAR_SIDEPANE_TYPE_SHORTCUTS"/>
   <property name="hidden-bookmarks" type="array">
-    <value type="string" value="file:///home/nicourrrn"/>
     <value type="string" value="file:///home/nicourrrn/Desktop"/>
     <value type="string" value="trash:///"/>
     <value type="string" value="recent:///"/>
