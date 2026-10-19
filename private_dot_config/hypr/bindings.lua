@@ -19,7 +19,7 @@ local noctalia = function(cmd) return hl.dsp.exec_cmd("noctalia msg " .. cmd) en
 -- 1. Програми
 -- ------------------------------------------------------------------------------
 bind(mod .. " + Return",       hl.dsp.exec_cmd("terminal-cwd"),                 "Apps: Terminal in active window's directory")
-bind(mod .. " + ALT + Return", hl.dsp.exec_cmd("foot -e zellij"), "Apps: Terminal with Zellij")
+bind(mod .. " + ALT + Return", hl.dsp.exec_cmd("zellij-pick"),    "Apps: Zellij session picker")
 bind(mod .. " + E",            hl.dsp.exec_cmd("thunar"),                       "Apps: File manager")
 bind(mod .. " + SHIFT + P",    hl.dsp.exec_cmd("keepassxc"),                    "Apps: KeePassXC")
 
