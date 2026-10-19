@@ -12,7 +12,7 @@ hl.env("PATH", home .. "/arch-custom-os/bin:" .. home .. "/.local/bin:" .. curre
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("EDITOR", "zeditor")
-hl.env("TERMINAL", "kitty")
+hl.env("TERMINAL", "foot")
 -- Lua не розкриває $VAR у рядках: беремо шлях явно
 hl.env("SSH_AUTH_SOCK", (os.getenv("XDG_RUNTIME_DIR") or "/run/user/1000") .. "/ssh-agent.socket")
 
