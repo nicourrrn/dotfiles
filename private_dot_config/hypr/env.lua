@@ -26,7 +26,9 @@ hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 
 -- ------------------------------------------------------------------------------
--- Динамічне автовизначення відеокарти (GPU Detection)
+-- Відеокарта. Гібрид AMD + NVIDIA налаштовано в ~/.config/uwsm/env-hyprland: uwsm передає
+-- ті змінні всім програмам (hl.env сюди не доходить до запущених через uwsm-app).
+-- Тут — лише випадок десктопа, де NVIDIA єдина відеокарта.
 -- ------------------------------------------------------------------------------
 local function check_cmd(cmd)
   local handle = io.popen(cmd .. " 2>/dev/null")
@@ -36,28 +38,14 @@ local function check_cmd(cmd)
   return (result and #result > 0)
 end
 
-local has_nvidia = check_cmd("lspci | grep -iE 'nvidia.*(vga|3d)'")
+local nvidia_mod = io.open("/sys/module/nvidia_drm")
+if nvidia_mod then nvidia_mod:close() end
+local igpu = check_cmd("lspci | grep -iE '(vga|display).*(amd|ati|intel)'")
 
-if has_nvidia then
-  -- Дискретна графіка NVIDIA: бекенди та драйвери під Wayland
+if nvidia_mod and not igpu then
   hl.env("LIBVA_DRIVER_NAME", "nvidia")
   hl.env("GBM_BACKEND", "nvidia-drm")
   hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
   hl.env("NVD_BACKEND", "direct")
-
-  -- Програмний курсор для запобігання артефактам/мерехтінню на драйверах NVIDIA
-  hl.config({
-    cursor = {
-      no_hardware_cursors = true,
-    },
-  })
-else
-  -- Інтегрована графіка AMD або Intel (Mesa)
-  local is_amd = check_cmd("lspci | grep -iE 'amd|ati.*(vga|3d)'")
-  if is_amd then
-    hl.env("LIBVA_DRIVER_NAME", "radeonsi")
-    hl.env("VDPAU_DRIVER", "radeonsi")
-  else
-    hl.env("LIBVA_DRIVER_NAME", "iHD")
-  end
+  hl.config({ cursor = { no_hardware_cursors = true } }) -- без артефактів курсора на NVIDIA
 end
