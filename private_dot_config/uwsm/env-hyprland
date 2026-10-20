@@ -13,6 +13,9 @@ export XDG_SESSION_DESKTOP=Hyprland
 # ############# Others #############
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+export XCURSOR_SIZE=24
+export HYPRCURSOR_SIZE=24
+
 # ############# GPU #############
 # Екран і композитор — на інтегрованій AMD; VA-API (відео) теж тут, так економніше.
 export LIBVA_DRIVER_NAME=radeonsi
