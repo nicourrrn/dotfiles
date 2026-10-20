@@ -8,7 +8,4 @@ hl.on("hyprland.start", function()
 
   -- Менеджер паролів та SSH-агент
   hl.exec_cmd("keepassxc --minimized")
-
-  -- Буфер обміну Wayland
-  hl.exec_cmd("wl-paste --watch cliphist store")
 end)

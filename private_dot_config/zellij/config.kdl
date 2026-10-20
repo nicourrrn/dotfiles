@@ -286,7 +286,7 @@ theme "gruvbox"
 themes {
     gruvbox {
         fg "#ebdbb2"
-        bg "#282828"
+        bg "#504945"
         black "#282828"
         red "#fb4934"
         green "#b8bb26"
@@ -299,7 +299,7 @@ themes {
     }
     nord {
         fg "#eceff4"
-        bg "#2e3440"
+        bg "#434c5e"
         black "#3b4252"
         red "#bf616a"
         green "#a3be8c"

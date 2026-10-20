@@ -1,0 +1,47 @@
+# ==============================================================================
+# Стиль лаунчера та панелей Noctalia (власний шар конфігу).
+# Noctalia зливає всі *.toml з ~/.config/noctalia/; GUI-зміни пишуться в
+# ~/.local/state/noctalia/settings.toml і мають пріоритет над цим файлом.
+# Довідка: https://github.com/noctalia-dev/noctalia/blob/main/docs/user/configuration/shell.mdx
+# ==============================================================================
+
+[shell]
+corner_radius_scale = 1.25   # трохи м'якші кути, у тон rounding = 8 у Hyprland
+button_borders      = false  # без обводок на кнопках — чистіший вигляд
+
+[shell.animation]
+speed = 1.25                 # трохи швидше, у тон анімаціям Hyprland
+
+[shell.panel]
+transparency_mode    = "soft"    # легка прозорість + розмиття від Hyprland (layer rule у rules.lua); glass — надто прозоро
+borders              = true
+border_color         = "primary" # тонка акцентна рамка, як active_border у Hyprland
+border_width         = 1.0
+list_item_background = true      # заокруглені «картки» під рядками лаунчера та буфера
+launcher_placement   = "floating"
+launcher_position    = "center"
+clipboard_placement  = "floating"
+clipboard_position   = "center"
+
+[shell.launcher]
+layout                    = "full"
+width                     = 720
+search_position           = "top"    # пошук зверху, як у Spotlight
+default_view              = "pinned" # порожній запит — закріплені програми
+show_icons                = true
+show_app_origin_indicator = false
+show_settings_button      = false
+show_session_button       = true
+compact                   = false
+sort_by_usage             = true
+auto_paste                = "auto"   # Enter у буфері обміну одразу вставляє
+pinned = [
+  "zen",
+  "dev.zed.Zed",
+  "foot",
+  "thunar",
+  "org.telegram.desktop",
+  "thorium-browser",
+  "spotify",
+  "org.keepassxc.KeePassXC",
+]

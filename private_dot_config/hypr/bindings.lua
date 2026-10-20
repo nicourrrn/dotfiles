@@ -23,10 +23,10 @@ bind(mod .. " + ALT + Return", hl.dsp.exec_cmd("zellij-pick"),    "Apps: Zellij 
 bind(mod .. " + E",            hl.dsp.exec_cmd("thunar"),                       "Apps: File manager")
 bind(mod .. " + SHIFT + P",    hl.dsp.exec_cmd("keepassxc"),                    "Apps: KeePassXC")
 
--- Лаунчер і буфер обміну (Spotlight / Windows-style)
-bind(mod .. " + Space",       hl.dsp.exec_cmd("vicinae toggle"),                     "Launcher: Vicinae")
-bind(mod .. " + ALT + Space", noctalia("panel-toggle launcher"),                     "Launcher: Noctalia")
-bind(mod .. " + V",           hl.dsp.exec_cmd("vicinae 'vicinae://launch/clipboard/history?toggle=true'"), "Launcher: Clipboard history")
+-- Лаунчер і буфер обміну (Spotlight / Windows-style). Префікси в лаунчері: / — список
+bind(mod .. " + Space",       noctalia("panel-toggle launcher"),        "Launcher: Noctalia")
+bind(mod .. " + ALT + Space", noctalia("panel-toggle launcher /win"),   "Launcher: Open windows")
+bind(mod .. " + V",           noctalia("panel-toggle clipboard"),       "Launcher: Clipboard history")
 
 -- ------------------------------------------------------------------------------
 -- 2. Стан вікна

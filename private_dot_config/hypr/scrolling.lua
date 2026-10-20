@@ -33,6 +33,24 @@ hl.config({
 
 hl.window_rule({ name = "scrolling-wide-apps", match = { class = wide_apps }, scrolling_width = 1.0 })
 
+-- ------------------------------------------------------------------------------
+-- Анімації як у niri: стрічка їде по горизонталі, столи — по вертикалі.
+-- Пружини критично згасаючі (dampening = 2·√(mass·stiffness)): швидко і без «відскоку».
+-- ------------------------------------------------------------------------------
+hl.curve("niriView",      { type = "spring", mass = 1, stiffness = 800,  dampening = 57 })
+hl.curve("niriWorkspace", { type = "spring", mass = 1, stiffness = 1000, dampening = 64 })
+
+-- Прокрутка стрічки, swapcol, consume/expel, зміна ширини колонки
+hl.animation({ leaf = "windowsMove",   enabled = true, speed = 3.2, spring = "niriView" })
+-- Відкриття: niri масштабує з центру з fade, без пружного «стрибка»
+hl.animation({ leaf = "windowsIn",     enabled = true, speed = 2.2, bezier = "easeOutExpo", style = "popin 80%" })
+
+-- Столи стоять один над одним, тому зсув вертикальний (горизонталь зайнята стрічкою)
+hl.animation({ leaf = "workspaces",    enabled = true, speed = 3.0, spring = "niriWorkspace", style = "slidevert" })
+hl.animation({ leaf = "workspacesIn",  enabled = true, speed = 3.0, spring = "niriWorkspace", style = "slidevert" })
+hl.animation({ leaf = "workspacesOut", enabled = true, speed = 3.0, spring = "niriWorkspace", style = "slidevert" })
+hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 2.4, bezier = "easeOutExpo", style = "slidefadevert 20%" })
+
 -- Жести: 3 пальці горизонтально гортають стрічку, вертикально — робочі столи
 hl.gesture({ fingers = 3, direction = "horizontal", action = "scroll_move" })
 hl.gesture({ fingers = 3, direction = "vertical",   action = "workspace" })
@@ -58,9 +76,27 @@ for key, d in pairs(directions) do
     bind(mod .. " + ALT + " .. key, hl.dsp.layout("colresize " .. (d == "l" and "-0.05" or "+0.05")),
       "Scrolling: " .. (d == "l" and "Narrow" or "Widen") .. " column", { repeating = true })
   else
-    bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ direction = names[d] }),
-      "Scrolling: Move window " .. names[d] .. " in column")
+    -- На краю колонки вікно переїжджає на сусідній стіл (niri: move-window-up-or-to-workspace-up)
+    bind(mod .. " + SHIFT + " .. key, function()
+      local w = hl.get_active_window()
+      local l = w and not w.floating and w.layout
+      local col = l and l.column
+      if col and l.index_in_column == (d == "u" and 0 or #col.windows - 1) then
+        hl.dispatch(hl.dsp.window.move({ workspace = d == "u" and "r-1" or "r+1" }))
+      else
+        hl.dispatch(hl.dsp.window.move({ direction = names[d] }))
+      end
+    end, "Scrolling: Move window " .. names[d] .. " (or to workspace " .. (d == "u" and "above" or "below") .. ")")
   end
+end
+
+-- Столи вгору/вниз як у niri (Mod+U/I, Mod+Page_Down/Up); r±1 відкриває і порожній стіл
+local ws_keys = { U = "r+1", Next = "r+1", I = "r-1", Prior = "r-1" }
+for key, ws in pairs(ws_keys) do
+  local where = ws == "r+1" and "below" or "above"
+  bind(mod .. " + " .. key,          hl.dsp.focus({ workspace = ws }),       "Workspace: Go " .. where, { repeating = true })
+  bind(mod .. " + SHIFT + " .. key,  hl.dsp.window.move({ workspace = ws }), "Workspace: Move window " .. where)
+  bind(mod .. " + CTRL + " .. key,   hl.dsp.window.move({ workspace = ws }), "Workspace: Move window " .. where)
 end
 
 -- Super+Shift+колесо — вікна по горизонталі (Super+колесо — робочі столи, див. bindings.lua)

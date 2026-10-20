@@ -71,3 +71,11 @@ hl.window_rule({
   pin = true,
   keep_aspect_ratio = true,
 })
+
+-- Розмиття під напівпрозорими панелями Noctalia (лаунчер, буфер, центр керування)
+hl.layer_rule({
+  name = "noctalia-panel-blur",
+  match = { namespace = "^noctalia-panel$" },
+  blur = true,
+  ignore_alpha = 0.3,
+})

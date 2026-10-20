@@ -17,56 +17,21 @@ end = [
     "keyboard_layout",
     "notifications"
 ]
-start = [ "mpvpaper", "workspaces", "privacy", "media", "widget" ]
+start = [ "workspaces", "privacy", "media", "widget", "wallpaper" ]
 
 [battery]
 warning_threshold = 20
 
 [desktop_widgets]
 schema_version = 2
-widget_order = [ "desktop-widget-0000000000000001", "desktop-widget-0000000000000002", "desktop-widget-0000000000000003" ]
+widget_order = []
 
     [desktop_widgets.grid]
     cell_size = 16
     major_interval = 4
     visible = true
 
-    [desktop_widgets.widget.desktop-widget-0000000000000001]
-    box_height = 128.0
-    box_width = 544.0
-    cx = 960.0
-    cy = 940.0
-    output = "eDP-1"
-    placement_height = 1080.0
-    placement_width = 1920.0
-    rotation = 0.0
-    type = "audio_visualizer"
-
-        [desktop_widgets.widget.desktop-widget-0000000000000001.settings]
-        bands = 32
-        show_when_idle = true
-
-    [desktop_widgets.widget.desktop-widget-0000000000000002]
-    box_height = 416.0
-    box_width = 672.0
-    cx = 976.0
-    cy = 540.0
-    output = "eDP-1"
-    placement_height = 1080.0
-    placement_width = 1920.0
-    rotation = 0.0
-    type = "calendar"
-
-    [desktop_widgets.widget.desktop-widget-0000000000000003]
-    box_height = 0.0
-    box_width = 0.0
-    cx = 193.0
-    cy = 169.0
-    output = "eDP-1"
-    placement_height = 1080.0
-    placement_width = 1920.0
-    rotation = 0.0
-    type = "clock"
+    [desktop_widgets.widget]
 
 [location]
 auto_locate = true
@@ -111,31 +76,14 @@ widget_order = [ "lockscreen-login-box@eDP-1" ]
 [plugin_settings."alexander/screen-toolkit"]
 selected-ocr-lang = "eng+ukr"
 
-[plugin_settings."noctalia/mpvpaper"]
-video_directory = "/home/nicourrrn/Pictures/Wallpaper"
-
 [plugins]
-enabled = [
-    "noctalia/wallhaven",
-    "noctalia/screen_recorder",
-    "noctalia/mpvpaper",
-    "felipeartur/ai-usagebar",
-    "alexander/screen-toolkit"
-]
+enabled = [ "noctalia/screen_recorder", "felipeartur/ai-usagebar", "alexander/screen-toolkit" ]
 
 [shell]
 font_family = "Fira Code SemiBold"
 lang = "uk-UA"
 polkit_agent = true
 screen_time_enabled = true
-
-    [shell.launcher]
-    categories = false
-    show_app_origin_indicator = false
-    show_icons = false
-
-        [shell.launcher.providers.calculator]
-        global = false
 
     [shell.screenshot]
     directory = "/home/nicourrrn/Pictures/Screenshots"
@@ -147,20 +95,21 @@ mode = "dark"
 source = "builtin"
 wallpaper_scheme = "m3-content"
 
-[wallpaper.default]
-path = "/usr/share/noctalia/assets/noctalia-wallpaper.png"
+[wallpaper]
+directory = "/home/nicourrrn/Pictures/Wallpaper/gruvbox/minimalistic"
+enabled = true
 
-[wallpaper.last]
-path = "/home/nicourrrn/.cache/noctalia/mpvpaper/_home_nicourrrn_Pictures_Wallpaper_164386_830461339_mp4.jpg"
+    [wallpaper.default]
+    path = "/home/nicourrrn/Pictures/Wallpaper/gruvbox/minimalistic/Gayskellies.png"
 
-[wallpaper.monitors.eDP-1]
-path = "/home/nicourrrn/.cache/noctalia/mpvpaper/_home_nicourrrn_Pictures_Wallpaper_164386_830461339_mp4.jpg"
+    [wallpaper.last]
+    path = "/home/nicourrrn/Pictures/Wallpaper/gruvbox/minimalistic/Gayskellies.png"
+
+    [wallpaper.monitors.eDP-1]
+    path = "/home/nicourrrn/Pictures/Wallpaper/gruvbox/minimalistic/Gayskellies.png"
 
 [widget.bar]
 type = "felipeartur/ai-usagebar:bar"
-
-[widget.mpvpaper]
-type = "noctalia/mpvpaper:mpvpaper"
 
 [widget.spacer_2]
 type = "spacer"
