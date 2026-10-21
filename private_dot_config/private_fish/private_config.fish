@@ -20,7 +20,3 @@ if status is-interactive
         pokemon-colorscripts -r -s --no-title | fastfetch --file-raw -
     end
 end
-
-# >>> lean-ctx wrap claude >>>
-set -gx ANTHROPIC_BASE_URL "http://127.0.0.1:4444"
-# <<< lean-ctx wrap claude <<<
