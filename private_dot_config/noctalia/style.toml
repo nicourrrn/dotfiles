@@ -45,3 +45,6 @@ pinned = [
   "spotify",
   "org.keepassxc.KeePassXC",
 ]
+
+[notification]
+layer = "overlay"            # тости поверх fullscreen-вікон (YouTube, ігри); на "top" їх перекриває
