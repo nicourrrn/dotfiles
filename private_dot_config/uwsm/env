@@ -1,3 +1,12 @@
+# ############# PATH #############
+# Скрипти arch-custom-os (terminal-cwd, zellij-pick, theme-set…) для біндів Hyprland
+export PATH="$HOME/arch-custom-os/bin:$HOME/.local/bin:$PATH"
+
+# Login shell — bash, fish лише інтерактивний (foot/zellij): змінні, що раніше жили
+# тільки в config.fish, потрібні всій сесії, зокрема командам через $SHELL -c
+export GOPATH="$HOME/.go"
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
 # ############# Themes #############
 export QT_QPA_PLATFORMTHEME='qt6ct'
 export QT_WAYLAND_DISABLE_WINDOWDECORATION='1'
