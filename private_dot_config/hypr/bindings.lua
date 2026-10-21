@@ -22,6 +22,7 @@ bind(mod .. " + Return",       hl.dsp.exec_cmd("terminal-cwd"),                 
 bind(mod .. " + ALT + Return", hl.dsp.exec_cmd("zellij-pick"),    "Apps: Zellij session picker")
 bind(mod .. " + E",            hl.dsp.exec_cmd("thunar"),                       "Apps: File manager")
 bind(mod .. " + SHIFT + P",    hl.dsp.exec_cmd("keepassxc"),                    "Apps: KeePassXC")
+bind(mod .. " + A",            hl.dsp.exec_cmd("xdg-open http://127.0.0.1:7480/"), "Apps: AI Hub (agents and tasks)")
 
 -- Лаунчер і буфер обміну (Spotlight / Windows-style). Префікси в лаунчері: / — список
 bind(mod .. " + Space",       noctalia("panel-toggle launcher"),        "Launcher: Noctalia")
