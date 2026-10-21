@@ -1,0 +1,13 @@
+[Unit]
+Description=AI Hub: live dashboard of coding agents and Backlog.md boards
+After=network.target
+
+[Service]
+ExecStart=%h/arch-custom-os/bin/ai-hub
+# backlog (mise) для дошок
+Environment=PATH=%h/.local/share/mise/shims:/usr/local/bin:/usr/bin
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

@@ -4,3 +4,6 @@
 # Робочі ключі не зберігаються в dotfiles
 .ssh/mobius_gitlab*
 .ssh/vsorokinmarketing*
+
+# Токен хаба агентів — локальний секрет
+.config/ai/hub.env

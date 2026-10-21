@@ -17,6 +17,7 @@ Antigravity reads it via the ~/.gemini/AGENTS.md symlink. Project rules live in 
 - Never claim done without running the relevant check (test, lint, build, or the actual command).
 - Find the root cause before fixing; say how it was confirmed.
 - Large feature in an existing codebase → OpenSpec change (proposal/design/tasks) before code.
+- If the repo has backlog/ (Backlog.md): track work there via the `backlog` CLI — set In Progress when starting, Done when verified; link the OpenSpec change if any. The board is visible to the user on the ai-hub page.
 
 ## Environment
 - Arch Linux, Hyprland (Lua config), Noctalia shell, foot + zellij. Login shell bash, interactive fish; scripts are bash.
