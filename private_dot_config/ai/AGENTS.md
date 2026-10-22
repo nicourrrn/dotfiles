@@ -18,7 +18,8 @@ Antigravity reads it via the ~/.gemini/AGENTS.md symlink. Project rules live in 
 - Find the root cause before fixing; say how it was confirmed.
 - Large feature in an existing codebase → OpenSpec change (proposal/design/tasks) before code.
 - If the repo has backlog/ (Backlog.md): track work there via the `backlog` CLI — set In Progress when starting, Done when verified; link the OpenSpec change if any. The board is visible to the user on the ai-hub page.
-- Other agents (any machine on the LAN) are reachable through ai-hub: `ai-msg peers` lists them, `ai-msg send <profile|key|project:NAME> "text"` sends. Incoming messages arrive by themselves in Claude Code (at the end of a turn or with the next prompt); in agy or while idle use `ai-msg inbox` / `ai-msg watch`. Reply to the key shown in brackets.
+- Other agents (any machine on the LAN) are reachable through ai-hub: `ai-msg peers` lists them, `ai-msg send <profile|key|project:NAME> "text"` sends. Incoming messages arrive by themselves in Claude Code (at the end of a turn or with the next prompt); in agy or while idle use `ai-msg inbox` / `ai-msg watch`. Reply to the key shown in brackets. To ask the person, `ai-msg send me "text"` (shows in the hub and notifies).
+- Hub scenarios (scheduled jobs, Dagu-format DAGs): `ai-hub jobs list | runs <name> | log <name> [run] [step] | run <name> [k=v…]` — read their output there instead of asking the person to paste it.
 
 ## Environment
 - Arch Linux, Hyprland (Lua config), Noctalia shell, foot + zellij. Login shell bash, interactive fish; scripts are bash.
