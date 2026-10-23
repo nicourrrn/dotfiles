@@ -61,8 +61,8 @@ hl.gesture({ fingers = 3, direction = "vertical",   action = "workspace" })
 local directions = {
   h = "l", left = "l",
   l = "r", right = "r",
-  j = "d", down = "d",
-  k = "u", up = "u",
+  j = "d",
+  k = "u",
 }
 local names = { l = "left", r = "right", u = "up", d = "down" }
 
@@ -90,8 +90,11 @@ for key, d in pairs(directions) do
   end
 end
 
--- Столи вгору/вниз як у niri (Mod+U/I, Mod+Page_Down/Up); r±1 відкриває і порожній стіл
-local ws_keys = { U = "r+1", Next = "r+1", I = "r-1", Prior = "r-1" }
+-- Столи вгору/вниз як у niri (Mod+Up/Down, Mod+U/I, Mod+Page_Down/Up); r±1 відкриває і порожній стіл
+local ws_keys = {
+  Up = "r-1", I = "r-1", Prior = "r-1",
+  Down = "r+1", U = "r+1", Next = "r+1",
+}
 for key, ws in pairs(ws_keys) do
   local where = ws == "r+1" and "below" or "above"
   bind(mod .. " + " .. key,          hl.dsp.focus({ workspace = ws }),       "Workspace: Go " .. where, { repeating = true })

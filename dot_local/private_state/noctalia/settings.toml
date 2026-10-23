@@ -7,6 +7,7 @@ enable_overdrive = true
 center = [ "clock", "weather", "bar" ]
 end = [
     "tray",
+    "spacer_4",
     "network",
     "bluetooth",
     "spacer_3",
@@ -111,10 +112,16 @@ enabled = true
 [widget.bar]
 type = "felipeartur/ai-usagebar:bar"
 
+[widget.clock]
+format = "{:%d.%m %H:%M}"
+
 [widget.spacer_2]
 type = "spacer"
 
 [widget.spacer_3]
+type = "spacer"
+
+[widget.spacer_4]
 type = "spacer"
 
 [widget.widget]
