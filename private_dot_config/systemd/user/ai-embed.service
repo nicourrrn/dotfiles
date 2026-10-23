@@ -1,0 +1,13 @@
+[Unit]
+Description=Embeddings for ai-hub memory (llama.cpp llama-server, EmbeddingGemma)
+# модель: ~/arch-custom-os/scripts/fetch-embed-model.sh
+ConditionPathExists=%h/.local/share/ai-hub/models/embeddinggemma-300M-Q8_0.gguf
+
+[Service]
+ExecStart=/usr/bin/llama-server -m %h/.local/share/ai-hub/models/embeddinggemma-300M-Q8_0.gguf --embeddings --host 127.0.0.1 --port 7481 -c 4096 -ub 2048 -b 2048 --parallel 2 --threads 4 --log-disable
+Restart=on-failure
+RestartSec=5
+Nice=10
+
+[Install]
+WantedBy=default.target
