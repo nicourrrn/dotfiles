@@ -7,6 +7,8 @@ ExecStart=%h/.local/bin/ai-hub serve
 # backlog (mise) для дошок; ai-hub — scripts/build-ai-hub.sh
 Environment=PATH=%h/.local/share/mise/shims:/usr/local/bin:/usr/bin
 Restart=on-failure
+# Terminals and zellij sessions the hub opens live in its cgroup: a restart must not kill the agents in them
+KillMode=process
 RestartSec=3
 
 [Install]
